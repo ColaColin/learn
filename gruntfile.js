@@ -171,4 +171,16 @@ module.exports = function (grunt) {
                                 'copy:css',
                                 'browserify',
                                 'clean:tmp']);
+  
+  grunt.registerTask('pack', 
+		  [ 'clean:all'
+		    , 'concat:packResources'
+		    , 'concat:includeResources'
+		    , 'copy:html'
+		    , 'copy:images'
+		    , 'copy:css'
+		    , 'browserify'
+		    , 'clean:tmp'
+		    , 'uglify'
+		    ]);
 };
