@@ -1,1 +1,30 @@
-<div>When $a \ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are $x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$</div>
+<div>Multiply: </div>
+
+<div><span data-bind="html: aDisplay"></span> <span data-bind="html: bDisplay"></span> = 
+
+<!-- ko if: solved -->
+<span data-bind="html: resultDisplay"></span>
+<!-- /ko -->
+
+</div>
+
+<div>Input space separated values, line by line</div>
+<div><textarea data-bind="textInput: matrixInput"></textarea></div>
+
+
+
+<!-- ko if: !solved() -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+	
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+<!-- /ko -->

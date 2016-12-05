@@ -8,7 +8,7 @@
 	taskModel: object, // a model that is bound to the taskUI to fill it with values, etc
 	// this should be a func on taskModel: setCallback: function(cb), // cb is called with info "task was done correctly: true, else false"
 	typeKey: "matrixmultiplication",
-	displayName: "Matrix Multiplication" 
+	displayName: "Matrix Multiplication"
 }
 
  */
@@ -78,6 +78,10 @@ function CardBox() {
 	self.currentCard = ko.computed(function() {
 		var card = self.currentSessionTodo()[0]; 
 		if (card) {
+			card.taskModel.showNew();
+			setTimeout(function() {
+				MathJax.Hub.Typeset();
+			}, 50);
 			card.taskModel.setCallback(function(wasCorrect) {
 				var todo = self.currentSessionTodo();
 				var rmCard = todo.shift();
@@ -142,7 +146,6 @@ function CardBox() {
 				var div = document.getElementById('card-content');
 				div.innerHTML = "<div>" + html + "</div>";
 				ko.applyBindings(self.currentCardModel(), div.children[0]);
-				MathJax.Hub.Typeset();
 			}, 5);
 		}
 	});
