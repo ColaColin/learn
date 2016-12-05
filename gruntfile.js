@@ -37,7 +37,29 @@ module.exports = function (grunt) {
         ' * @license <%= pkg.license %> licensed\n' +
         ' */\n'
       }
-
+    , concat: {
+		packResources: {
+			options: {
+				process: function(src, filepath) {
+					var keyJson = JSON.stringify(filepath.replace("src/resources/", ""));;
+					return "preloaded.preloadData("+keyJson+", "+JSON.stringify(src)+");";
+				},
+			},
+			src: ["src/resources/**"],
+			dest: 'build/resources.js',
+			nonull: true,
+		},
+		includeResources: {
+			options: {
+				process: function(src, filepath) {
+					return src.replace("//RES_HERE", grunt.file.read('build/resources.js'));
+				},
+			},
+			src: ["src/js/Preloaded_template.js"],
+			dest: "Preloaded.js",
+			nonull: true,
+		},
+    }
     , connect:
       { dev:
         { options:
@@ -58,7 +80,7 @@ module.exports = function (grunt) {
 
     , browserify:
       { app:
-        { src: ['<%= project.src %>/game/app.js']
+        { src: ['<%= project.src %>/app.js']
         , dest: '<%= project.bundle %>'
         , options:
           { transform: ['browserify-shim']
@@ -88,7 +110,8 @@ module.exports = function (grunt) {
         }
       }
     , clean: {
-        "all": ['./build/']
+        "all": ['./build/'],
+        "tmp": ['Preloaded.js', 'build/resources.js'],
      }
     , mkdir: 
       {
@@ -128,14 +151,24 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default',
     [ 'clean:all'
+    , 'concat:packResources'
+    , 'concat:includeResources'
     , 'copy:html'
     , 'copy:images'
     , 'copy:css'
     , 'browserify'
+    , 'clean:tmp'
     , 'connect'
     , 'watch'
     ]
   );
   
-  grunt.registerTask('update', ['clean:all', 'copy:html', 'copy:images', 'copy:css', 'browserify']);
+  grunt.registerTask('update', ['clean:all',
+                                'concat:packResources',
+                                'concat:includeResources',
+                                'copy:html',
+                                'copy:images',
+                                'copy:css',
+                                'browserify',
+                                'clean:tmp']);
 };

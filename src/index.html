@@ -2,8 +2,31 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Learn Cards</title>
+			<script type="text/x-mathjax-config">
+				  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+				</script>
+		<script type="text/javascript" async
+  				src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+		<script src="js/app.min.js"></script>
+		<link href="css/main.css" rel="stylesheet">
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/bootstrap-theme.css" rel="stylesheet">
 	</head>
 	<body>
-		Hi there!!
+		
+		<div class="container">
+			<!-- ko ifnot: isInSession -->
+			<button class="btn btn-lg btn-default" data-bind="click: nextSession">Next Session</button>
+			<!-- /ko -->
+			
+			<!-- ko if: isInSession -->
+			<div>Remaining: <span data-bind="text: remainingInSession"></span></div>
+			<div>Current Card: <span data-bind="text: currentCardTitle"></span></div>
+			<div id="card-content" class="card"></div>
+			<!-- /ko -->
+		</div>
+		
+
 	</body>
 </html>
