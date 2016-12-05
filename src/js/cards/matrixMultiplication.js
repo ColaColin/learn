@@ -31,6 +31,7 @@ function MMCard() {
 		self.correct(false);
 		self.solved(false);
 		self.matrixInput("");
+		self.hint("");
 		self.matrixA(rndMatrix());
 		self.matrixB(rndMatrix(0, self.matrixA()[0].length));
 	};
@@ -88,6 +89,8 @@ function MMCard() {
 	self.bDisplay = makeMatrixDisplay(self.matrixB);
 	self.resultDisplay = makeMatrixDisplay(self.result);
 	
+	self.hint = ko.observable("");
+	
 	self.matrixInput = ko.observable("");
 	
 	self.solved = ko.observable(false);
@@ -108,18 +111,21 @@ function MMCard() {
 		if (answer.length === result.length) {
 			for (var i = 0; i < answer.length; i++) {
 				if (answer[i].length !== result[i].length) {
+					self.hint("Wrong dimensions: "+answer[i].length + " $ \\neq $" + result[i].length);
 					correct = false;
 					break;
 				}
 				
 				for (var k = 0; k < answer[i].length; k++) {
 					if (answer[i][k] !== result[i][k]) {
+						self.hint("Wrong matrix entry: "+answer[i][k] + "$\\neq$" + result[i][k]);
 						correct = false;
 						break;
 					}
 				}
 			}
 		} else {
+			self.hint("Wrong dimensions: "+answer.length + " $ \\neq $" + result.length);
 			correct = false;
 		}
 		
