@@ -1,26 +1,29 @@
 {
-  "name": "es6-6to5-browserify-boilerplate",
-  "version": "0.0.0",
-  "description": "A repo to play with ES6++",
-  "homepage": "https://github.com/thoughtram/es6-6to5-browserify-boilerplate",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/thoughtram/es6-6to5-browserify-boilerplate.git"
-  },
-  "bugs": {
-    "url": "https://github.com/thoughtram/es6-6to5-browserify-boilerplate/issues"
-  },
-  "devDependencies": {
-    "babelify": "~5.0.3",
-    "browser-sync": "^1.7.1",
-    "browserify": "^6.3.3",
-    "gulp": "~3.8.10",
-    "gulp-rename": "^1.2.0",
-    "lodash": "^2.4.1",
-    "rimraf": "~2.2.8",
-    "watchify": "^2.1.1",
-    "vinyl-source-stream": "^1.0.0"
-  },
-  "author": "Christoph Burgdorf <christoph@thoughtram.io>",
-  "license": "MIT"
+	"name": "learn",
+	"version": "1.0.0",
+	"main": "build/js/app.min.js",
+	"author": "cclausen",
+	"browser": {
+	},
+	"browserify-shim": {
+	},
+	"dependencies": {
+		"browserify": "^13.0.0",
+		"browserify-shim": "^3.8.12",
+		"grunt": "^0.4.5",
+		"grunt-browserify": "^5.0.0",
+		"grunt-cache-bust": "^1.1.1",
+		"grunt-contrib-clean": "^1.0.0",
+		"grunt-contrib-compress": "^1.1.1",
+		"grunt-contrib-connect": "^1.0.0",
+		"grunt-contrib-copy": "^1.0.0",
+		"grunt-contrib-uglify": "^1.0.0",
+		"grunt-contrib-watch": "^1.0.0",
+		"grunt-open": "^0.2.3",
+		"lodash": "^4.6.1",
+		"knockout": "^3.4.1"
+	},
+	"devDependencies": {
+		"grunt-mkdir": "^1.0.0"
+	}
 }
