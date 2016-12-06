@@ -2,18 +2,71 @@
 
 <div>From $A = $ <span data-bind="html: pointADisplay"></span> to $B = $ <span data-bind="html: pointBDisplay"></span></div>
 
-<br/>
-
-<div>The parametric form:</div>
+<h2>The parametric form?</h2>
+<div>Start: <input data-bind="textInput: parametricStartInput"/>, 
+	Delta: <input data-bind="textInput: parametricDeltaInput"/> </div>
+<!-- ko if: showHints -->
 <div class="bg-info">$ \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} A_x \\ A_y \end{pmatrix} + t \begin{pmatrix} B_x - A_x \\ B_y - A_y \end{pmatrix} $</div>
+<!-- /ko -->
+<!-- ko if: solved -->
 <div><span data-bind="html: parametricDisplay"></span></div>
+<!-- /ko -->
 
-<br />
-
-<div>The slope intersect form:</div>
+<h2>The slope intersect form?</h2>
+<div>
+m: <input data-bind="textInput: slopeIntersectMInput" />, b: <input data-bind="textInput: slopeIntersectBInput" />
+</div>
+<!-- ko if: showHints -->
 <div class="bg-info">If possible use $y = mx + b$, else x = b. <br/>
 	slope $m = \frac{B_y - A_y}{B_x - A_x}, B_x - A_x \neq 0; else\ m = 0 $ <br/> intersect $ b = A_y - mA_x = B_y - mB_x $ </div>
+<!-- /ko -->
+<!-- ko if: solved -->
 <div><span data-bind="html: slopeIntersectDisplay"></span></div>
+<!-- /ko -->
 
-<br/>
+<h2>The hesse normal form?</h2>
+<div>
+n: <input data-bind="textInput: hesseNInput" />, d: <input data-bind="textInput: hesseDInput"/>
+</div>
+<!-- ko if: showHints -->
+<div class="bg-info">$ n ^ T p = d$ for all points p on the line<br/>
+normal $n = \begin{pmatrix} A_y - B_y \\ B_x - A_x \end{pmatrix} * \frac{1}{||B-A||}, ||n|| = 1 $ <br/>
+distance $d = n^T p_0 = n^T p_1 \ge 0 $ <br/>
+If d happens to be below 0, multiply n and d by -1.
+</div>
+<!-- /ko -->
+<!-- ko if: solved -->
+<div><span data-bind="html: hesseDisplay"></span></div>
+<!-- /ko -->
 
+<h2>The implict form?</h2>
+<div>
+n: <input data-bind="textInput: implicitNInput" />, p0: <input data-bind="textInput: implicitPInput" />
+</div>
+<!-- ko if: showHints -->
+<div class="bg-info">$ n^T(p - A) = 0, n := \begin{pmatrix} A_y - B_y \\ B_x - A_x \end{pmatrix} $ for all points p on the line</div>
+<!-- /ko -->
+<!-- ko if: solved -->
+<div><span data-bind="html: implicitDisplay"></span></div>
+<!-- /ko -->
+
+<!-- ko if: !showHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+<button class="btn btn-default" data-bind="click: next">Next</button>
+
+<!-- ko if: correct -->
+<div class="bg-success">Correct!</div>
+<!-- /ko -->
+
+<!-- ko ifnot: correct -->
+<div class="bg-danger">Wrong!</div>
+<!-- /ko -->
+
+<!-- /ko -->

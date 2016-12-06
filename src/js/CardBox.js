@@ -29,7 +29,7 @@ function CardBox() {
 		cardTypeMap[cardObj.typeName] = cardObj;
 	};
 	
-//	registerCardType(matmul);
+	registerCardType(matmul);
 	registerCardType(linerep);
 	
 	var cardRankings = Object.create(null);
