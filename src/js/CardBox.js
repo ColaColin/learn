@@ -18,6 +18,7 @@ var ko = require("knockout");
 var _ = require("lodash");
 
 var matmul = require("./cards/matrixMultiplication");
+var linerep = require("./cards/line-forms.js");
 
 function CardBox() {
 	
@@ -28,7 +29,8 @@ function CardBox() {
 		cardTypeMap[cardObj.typeName] = cardObj;
 	};
 	
-	registerCardType(matmul);
+//	registerCardType(matmul);
+	registerCardType(linerep);
 	
 	var cardRankings = Object.create(null);
 	var sessionNumber = 0;

@@ -1,5 +1,6 @@
 var preloaded = require("../../../Preloaded");
 var ko = require("knockout");
+var math = require("./helpers/math");
 
 function MMCard() {
 	var self = this;
@@ -61,33 +62,9 @@ function MMCard() {
 		return matrix;
 	});
 	
-	var makeMatrixDisplay = function(observe) {
-		return ko.computed(function() {
-			var m = observe();
-			var str = "$ \\begin{pmatrix}";
-			
-			for (var h = 0; h < m.length; h++) {
-				var line = "";
-				for (var w = 0; w < m[h].length; w++) {
-					line += m[h][w];
-					if (w + 1 < m[h].length) {
-						line += " & ";
-					}
-				}
-				if (h + 1 < m.length) {
-					line += " \\\\ ";
-				}
-				str += line;
-			}
-			
-			str += "\\end{pmatrix} $";
-			return str;
-		});
-	};
-	
-	self.aDisplay = makeMatrixDisplay(self.matrixA);
-	self.bDisplay = makeMatrixDisplay(self.matrixB);
-	self.resultDisplay = makeMatrixDisplay(self.result);
+	self.aDisplay = math.makeMatrixDisplay(self.matrixA);
+	self.bDisplay = math.makeMatrixDisplay(self.matrixB);
+	self.resultDisplay = math.makeMatrixDisplay(self.result);
 	
 	self.hint = ko.observable("");
 	

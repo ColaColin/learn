@@ -1,0 +1,19 @@
+<div>Given two points list line representations:</div>
+
+<div>From $A = $ <span data-bind="html: pointADisplay"></span> to $B = $ <span data-bind="html: pointBDisplay"></span></div>
+
+<br/>
+
+<div>The parametric form:</div>
+<div class="bg-info">$ \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} A_x \\ A_y \end{pmatrix} + t \begin{pmatrix} B_x - A_x \\ B_y - A_y \end{pmatrix} $</div>
+<div><span data-bind="html: parametricDisplay"></span></div>
+
+<br />
+
+<div>The slope intersect form:</div>
+<div class="bg-info">If possible use $y = mx + b$, else x = b. <br/>
+	slope $m = \frac{B_y - A_y}{B_x - A_x}, B_x - A_x \neq 0; else\ m = 0 $ <br/> intersect $ b = A_y - mA_x = B_y - mB_x $ </div>
+<div><span data-bind="html: slopeIntersectDisplay"></span></div>
+
+<br/>
+
