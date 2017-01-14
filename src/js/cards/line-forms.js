@@ -68,7 +68,7 @@ function LFCard() {
 	
 	var eq = function(a, b) {
 		var d = Math.abs(a - b);
-		return d < 0.101;
+		return d < 0.0101;
 	};
 	
 	var vecsEqual = function(a, b) {
