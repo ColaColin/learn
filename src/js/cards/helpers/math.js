@@ -34,8 +34,22 @@ var makeMatrixDisplay = function(observe) {
 	});
 };
 
+var makeVectorDisplay = function(observe) {
+	return ko.computed(function() {
+		var v = observe();
+		return "$ \\begin{pmatrix} "+v[0].toFixed(2)+" \\\\ "+ v[1].toFixed(2) +"  \\end{pmatrix} $";
+	});
+};
 
+var makeVarDisplay = function(name, observe) {
+	return ko.computed(function() {
+		var v = observe();
+		return "$ "+name+" = " + v.toFixed(2) + " $";
+	});
+};
 
 module.exports = {
 	makeMatrixDisplay: makeMatrixDisplay,
+	makeVectorDisplay: makeVectorDisplay,
+	makeVarDisplay: makeVarDisplay
 };

@@ -1,0 +1,68 @@
+<div>Use the Cohen Sutherland Algorithm:</div>
+
+<div>Line segment from A: <span data-bind="text: pointADisplay"></span> to B: <span data-bind="text: pointBDisplay"></span></div>
+<div>
+Clipping Window is: <br/>
+<span data-bind="text: xminDisplay"></span>,
+<span data-bind="text: xmaxDisplay"></span>,
+<span data-bind="text: yminDisplay"></span>,
+<span data-bind="text: ymaxDisplay"></span>
+</div>
+
+<br/>
+
+<div>
+out code of A: <input data-bind="textInput: outCodeAInput" /> <br/>
+out code of B: <input data-bind="textInput: outCodeBInput" /> <br/>
+Line is: <select data-bind="options: ['inside', 'intersect', 'outside'], value: lineStateInput"></select>
+</div>
+
+<br/>
+
+<!-- ko if: solved -->
+<div>
+<h3>Solution</h3>
+out code of A: <span data-bind="text: outCodeA"></span> <br/>
+out code of B: <span data-bind="text: outCodeB"></span> <br/>
+Line is: <span data-bind="text: lineState"></span>
+</div>
+<br/>
+<!-- /ko -->
+
+<!-- ko if: showingHints -->
+The Cohen Sutherland Algorithm determines a simple code for each point of a line segment
+that encodes where it is relative to the clipping window.<br/>
+Given a point $P = (x, y)$, the out code bits $b_1 b_2 b_3 b_4$ are:<br/>
+$ b1 = isNeg(y_{max} - y) $ <br/>
+$ b2 = isNeg(y - y_{min}) $ <br/>
+$ b3 = isNeg(x_{max} - x) $ <br/>
+$ b4 = isNeg(x - x_{min}) $ <br/>
+with $ isNeg(x) := \begin{cases} 0 & \text{if } x \geq 0 \\ 1 & \text{if } x \lt 0  \end{cases} $ <br/>
+The line segment is inside, if the code of both points is 0000, <br/>it is outside if the logical and of the both codes is not 0000,<br/> 
+else it intersects the window and needs further clipping.
+<img src="images/csazones.png" />
+<br/>
+
+<!-- /ko -->
+
+<!-- ko if: !showingHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
+

@@ -19,6 +19,7 @@ var _ = require("lodash");
 
 var matmul = require("./cards/matrixMultiplication");
 var linerep = require("./cards/line-forms.js");
+var csa = require("./cards/cohensutherland.js");
 
 function CardBox() {
 	
@@ -31,15 +32,16 @@ function CardBox() {
 	
 	registerCardType(matmul);
 	registerCardType(linerep);
+	registerCardType(csa);
 	
 	var cardRankings = Object.create(null);
-	var sessionNumber = 0;
+	self.sessionNumber = ko.observable(0);
 	
 	var getSessionCards = function() {
 		var cards = [];
 		_.each(cardTypeMap, function(card, typeName) {
 			var rankings = cardRankings[typeName];
-			if (!rankings || rankings.lastsession + rankings.interval <= sessionNumber) {
+			if (!rankings || rankings.lastsession + rankings.interval <= self.sessionNumber()) {
 				cards.push(card);
 			}
 		});
@@ -49,14 +51,14 @@ function CardBox() {
 	var load = function() {
 		if (localStorage.store) {
 			var store = JSON.parse(localStorage.store);
-			sessionNumber = store.sessionNumber;
+			self.sessionNumber(store.sessionNumber);
 			cardRankings = store.cardRankings;
 		}
 	};
 	
 	var save = function() {
 		localStorage.store = JSON.stringify({
-			sessionNumber: sessionNumber,
+			sessionNumber: self.sessionNumber(),
 			cardRankings: cardRankings
 		});
 	};
@@ -72,9 +74,16 @@ function CardBox() {
 	});
 	
 	self.nextSession = function() {
-		sessionNumber++;
+		self.sessionNumber(self.sessionNumber() + 1);
 		save();
 		self.currentSessionTodo(getSessionCards());
+		if (self.remainingInSession() === 0) {
+			self.nextSession();
+		}
+	};
+	
+	var getCardRankings = function(typeName) {
+		return cardRankings[typeName] || {interval: 1, points: 1, lastsession: -1};
 	};
 	
 	self.currentCard = ko.computed(function() {
@@ -88,19 +97,19 @@ function CardBox() {
 				var todo = self.currentSessionTodo();
 				var rmCard = todo.shift();
 				
-				var cr = cardRankings[card.typeName] || {interval: 1, points: 0, lastsession: -1};
+				var cr = getCardRankings(card.typeName);
 				
 				if (wasCorrect) {
 					cr.points++;
-					if (cr.points >= 8) {
-						cr.points = 0;
+					if (cr.points >= 5) {
+						cr.points = 1;
 						cr.interval *= 2;
 					}
-					cr.lastsession = sessionNumber;
+					cr.lastsession = self.sessionNumber();
 				} else {
-					cr.points-=2;
-					if (cr.points < 0) {
-						cr.points = 0;
+					cr.points-=0.5;
+					if (cr.points <= 0) {
+						cr.points = 1;
 						cr.interval = 1;
 					}
 					todo.push(rmCard);
@@ -113,6 +122,26 @@ function CardBox() {
 			});
 		}
 		return card;
+	});
+	
+	self.currentCardPoints = ko.computed(function() {
+		var c = self.currentCard();
+		if (c) {
+			var r = getCardRankings(c.typeName);
+			return r.points;
+		} else {
+			return "";
+		}
+	});
+
+	self.currentCardInterval = ko.computed(function() {
+		var c = self.currentCard();
+		if (c) {
+			var r = getCardRankings(c.typeName);
+			return r.interval;
+		} else {
+			return "";
+		}
 	});
 	
 	self.currentCardTitle = ko.computed(function() {
