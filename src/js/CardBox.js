@@ -20,6 +20,7 @@ var _ = require("lodash");
 var matmul = require("./cards/matrixMultiplication");
 var linerep = require("./cards/line-forms.js");
 var csa = require("./cards/cohensutherland.js");
+var lineIntersect = require("./cards/lineIntersect.js");
 
 function CardBox() {
 	
@@ -33,9 +34,12 @@ function CardBox() {
 	registerCardType(matmul);
 	registerCardType(linerep);
 	registerCardType(csa);
+	registerCardType(lineIntersect);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);
+	
+	self.cards = Object.values(cardTypeMap);
 	
 	var getSessionCards = function() {
 		var cards = [];
@@ -85,6 +89,8 @@ function CardBox() {
 	var getCardRankings = function(typeName) {
 		return cardRankings[typeName] || {interval: 1, points: 1, lastsession: -1};
 	};
+	
+	self.getCardRankings = getCardRankings;
 	
 	self.currentCard = ko.computed(function() {
 		var card = self.currentSessionTodo()[0]; 
@@ -182,6 +188,12 @@ function CardBox() {
 	});
 	
 	load();
+	
+	self.sortedCards = _.sortBy(self.cards, function(c) {
+		return self.getCardRankings(c.typeName).points;
+	}, function(c) {
+		return self.getCardRankings(c.typeName).interval;
+	});
 };
 
 module.exports = CardBox;

@@ -66,14 +66,9 @@ function LFCard() {
 	self.pointADisplay = math.makeMatrixDisplay(self.pointA);
 	self.pointBDisplay = math.makeMatrixDisplay(self.pointB);
 	
-	var eq = function(a, b) {
-		var d = Math.abs(a - b);
-		return d < 0.0101;
-	};
+	eq = math.eq;
 	
-	var vecsEqual = function(a, b) {
-		return eq(a[0], b[0]) && eq(a[1], b[1]) && a.length === 2 && b.length === 2;
-	};
+	vecsEqual = math.vecsEqual;
 	
 	self.solve = function() {
 		if (self.parametricCorrect() && self.slopeIntersectCorrect() && self.hesseCorrect() && self.implicitCorrect()) {
@@ -104,8 +99,8 @@ function LFCard() {
 	self.parametricDeltaInput = ko.observable("");
 	
 	self.parametricInput = ko.computed(function() {
-		var s = self.parametricStartInput().trim().split(/ +/);
-		var d = self.parametricDeltaInput().trim().split(/ +/);
+		var s = math.parseVector(self.parametricStartInput());;
+		var d = math.parseVector(self.parametricDeltaInput());
 		return {
 			start: [Number(s[0]), Number(s[1])],
 			delta: [Number(d[0]), Number(d[1])]
@@ -199,7 +194,7 @@ function LFCard() {
 	self.hesseDInput = ko.observable("");
 	
 	self.hesseCorrect = ko.computed(function() {
-		var nIn = self.hesseNInput().trim().split(/ +/).map(Number);
+		var nIn = math.parseVector(self.hesseNInput());
 		var dIn = Number(self.hesseDInput());
 		var h = self.hesseNormal();
 		return vecsEqual(nIn, h.n) && eq(dIn, h.d);
@@ -215,19 +210,15 @@ function LFCard() {
 	self.implicit = ko.computed(function() {
 		var pa = self.pointA();
 		var pb = self.pointB();
-		var n = [pa[1] - pb[1], pb[0] - pa[0]];
-		return {
-			n: n,
-			p0: pa,
-		};
+		return math.implicitLine(pa, pb);
 	});
 	
 	self.implicitNInput = ko.observable("");
 	self.implicitPInput = ko.observable("");
 	
 	self.implicitCorrect = ko.computed(function() {
-		var nIn = self.implicitNInput().trim().split(/ +/).map(Number);
-		var aIn = self.implicitPInput().trim().split(/ +/).map(Number);
+		var nIn = math.parseVector(self.implicitNInput());
+		var aIn = math.parseVector(self.implicitPInput());
 		var im = self.implicit();
 		return vecsEqual(nIn, im.n) && vecsEqual(im.p0, aIn);
 	});

@@ -28,6 +28,38 @@
 			Interval: <span data-bind="text: currentCardInterval"></span></div>
 			<div id="card-content" class="card"></div>
 			<!-- /ko -->
+			
+			<!-- ko ifnot: isInSession -->
+				<h3>Scores</h3>
+				<table>
+					<thead>
+						<tr>
+							<td class="cards">
+							Card
+							</td>
+							<td class="points">
+							Points
+							</td>
+							<td>
+							Interval
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+					
+					<!-- ko foreach: sortedCards -->
+						<tr class="lines">
+							<td data-bind="text: displayName"></td>
+							<td data-bind="text: $root.getCardRankings($data.typeName).points"> </td>
+							<td data-bind="text: $root.getCardRankings($data.typeName).interval"> </td>
+						</tr>
+					<!-- /ko -->
+					
+					</tbody>
+				</table>
+
+			<!-- /ko -->
+			
 		</div>
 		
 

@@ -1,0 +1,51 @@
+<div>Given: <br/>Line 1 from <span data-bind="text: pointADisplay"></span> to 
+<span data-bind="text: pointBDisplay"></span> <br/>
+Line 2 from <span data-bind="text: pointCDisplay"></span> 
+to <span data-bind="text: pointDDisplay"></span> <br/>Calculate the intersection!<br/>
+If there is no intersection, let the input field empty.</div>
+
+<div>
+Intersection: <input data-bind="textInput: intersectionInput"/>
+</div>
+
+<!-- ko if: solved -->
+<h3>Solution</h3>
+Intersection: <span data-bind="text: intersectionDisplay"></span>
+<!-- /ko -->
+
+<!-- ko if: showingHints -->
+
+Set equal the two line equations and solve them.<br/>
+For example with the implicit form: <br/>
+$ n^T(p - A) = 0, n := \begin{pmatrix} A_y - B_y \\ B_x - A_x \end{pmatrix} $ for all points p on the line <br/>
+$ n^Tp - n^TA = 0) $ <br/>
+$ \text{Set } d = -n^TA $ <br/>
+$ n^Tp + d = 0 $ <br/>
+<br/>
+After putting the two lines into this form, solve the equation system: <br/>
+$ n1^Tp + d1 = 0 $ <br/>
+$ n2^Tp + d2 = 0 $ <br/>
+
+<!-- /ko -->
+
+
+<!-- ko if: !showingHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
