@@ -56,10 +56,10 @@ function CSACard() {
 		self.outCodeBInput("");
 		self.lineStateInput("");
 		
-		self.xmin(2);
-		self.xmax(4);
-		self.ymin(2);
-		self.ymax(4);
+//		self.xmin(2);
+//		self.xmax(4);
+//		self.ymin(2);
+//		self.ymax(4);
 		
 //		self.pointA([-7,-77]);
 //		self.pointB([5,5]);
