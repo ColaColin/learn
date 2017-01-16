@@ -61,8 +61,8 @@ function CSACard() {
 		self.ymin(2);
 		self.ymax(4);
 		
-		self.pointA([-7,-77]);
-		self.pointB([5,5]);
+//		self.pointA([-7,-77]);
+//		self.pointB([5,5]);
 		
 		self.correct(false);
 		self.showingHints(false);
