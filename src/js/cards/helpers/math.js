@@ -102,6 +102,17 @@ var eq = function(a, b) {
 	return d < 0.0101;
 };
 
+var rndVal = function() {
+	return Math.floor(Math.random() * 12) - 6;
+};
+
+var rndPoint = function(fac) {
+	if (fac === undefined) {
+		fac = 1;
+	}
+	return [rndVal() * fac, rndVal() * fac];
+};
+
 module.exports = {
 	makeMatrixDisplay: makeMatrixDisplay,
 	makeVectorDisplay: makeVectorDisplay,
@@ -110,5 +121,7 @@ module.exports = {
 	parseVector: parseVector,
 	implicitLine: implicitLine,
 	intersectLines: intersectLines,
-	eq: eq
+	eq: eq,
+	rndVal: rndVal,
+	rndPoint: rndPoint
 };

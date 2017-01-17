@@ -22,7 +22,8 @@
 		"grunt-contrib-watch": "^1.0.0",
 		"grunt-open": "^0.2.3",
 		"lodash": "^4.6.1",
-		"knockout": "^3.4.1"
+		"knockout": "^3.4.1",
+		"gl-matrix": "^2.3.2"
 	},
 	"devDependencies": {
 		"grunt-mkdir": "^1.0.0"

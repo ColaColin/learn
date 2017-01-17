@@ -1,0 +1,34 @@
+<div>Transformations. Do them.</div>
+
+
+<!-- ko if: solved -->
+todo: solved
+<!-- /ko -->
+
+<!-- ko if: showingHints -->
+todo: hints
+<br/>
+
+<!-- /ko -->
+
+<!-- ko if: !showingHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
+

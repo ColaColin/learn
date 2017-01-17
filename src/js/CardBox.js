@@ -21,6 +21,7 @@ var matmul = require("./cards/matrixMultiplication");
 var linerep = require("./cards/line-forms.js");
 var csa = require("./cards/cohensutherland.js");
 var lineIntersect = require("./cards/lineIntersect.js");
+var transformations = require("./cards/transformations.js");
 
 function CardBox() {
 	
@@ -31,10 +32,11 @@ function CardBox() {
 		cardTypeMap[cardObj.typeName] = cardObj;
 	};
 	
-	registerCardType(matmul);
-	registerCardType(linerep);
-	registerCardType(csa);
-	registerCardType(lineIntersect);
+//	registerCardType(matmul);
+//	registerCardType(linerep);
+//	registerCardType(csa);
+//	registerCardType(lineIntersect);
+	registerCardType(transformations);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);
@@ -183,6 +185,9 @@ function CardBox() {
 				var div = document.getElementById('card-content');
 				div.innerHTML = "<div>" + html + "</div>";
 				ko.applyBindings(self.currentCardModel(), div.children[0]);
+				if (self.currentCardModel().bindingComplete) {
+					self.currentCardModel().bindingComplete();
+				}
 			}, 5);
 		}
 	});
