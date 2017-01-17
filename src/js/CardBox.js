@@ -31,10 +31,10 @@ function CardBox() {
 		cardTypeMap[cardObj.typeName] = cardObj;
 	};
 	
-	registerCardType(matmul);
+//	registerCardType(matmul);
 	registerCardType(linerep);
-	registerCardType(csa);
-	registerCardType(lineIntersect);
+//	registerCardType(csa);
+//	registerCardType(lineIntersect);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);
@@ -107,14 +107,14 @@ function CardBox() {
 				
 				if (wasCorrect) {
 					cr.points++;
-					if (cr.points >= 5) {
+					if (cr.points >= 3.5) {
 						cr.points = 1;
 						cr.interval *= 2;
 					}
 					cr.lastsession = self.sessionNumber();
 				} else {
 					cr.points-=0.5;
-					if (cr.points <= 0) {
+					if (cr.points < -0.0001) {
 						cr.points = 1;
 						cr.interval = 1;
 					}
@@ -190,9 +190,9 @@ function CardBox() {
 	load();
 	
 	self.sortedCards = _.sortBy(self.cards, function(c) {
-		return self.getCardRankings(c.typeName).points;
-	}, function(c) {
 		return self.getCardRankings(c.typeName).interval;
+	}, function(c) {
+		return self.getCardRankings(c.typeName).points;
 	});
 };
 

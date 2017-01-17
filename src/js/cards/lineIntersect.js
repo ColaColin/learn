@@ -41,6 +41,8 @@ function Card() {
 		self.pointC(rndPoint());
 		self.pointD(rndPoint());
 		
+		self.intersectionInput("");
+		
 //		self.pointA([-7,-77]);
 //		self.pointB([5,5]);
 		

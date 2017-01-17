@@ -60,7 +60,7 @@ var parseVector = function(str) {
 	if (str == null || str.length == 0) {
 		str = "0";
 	}
-	return str.trim().split(/ +/).map(Number);
+	return str.trim().replace(",", ".").split(/ +/).map(Number);
 };
 
 var implicitLine = function(pa, pb) {

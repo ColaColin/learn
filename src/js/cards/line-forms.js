@@ -40,8 +40,8 @@ function LFCard() {
 		self.implicitNInput("");
 		self.implicitPInput("");
 		
-//		self.pointA([2, 3]);
-//		self.pointB([5, 1]);
+		self.pointA([0, 1]);
+		self.pointB([-3, 3]);
 	};
 	
 	self.giveHint = function() {
@@ -71,7 +71,23 @@ function LFCard() {
 	vecsEqual = math.vecsEqual;
 	
 	self.solve = function() {
-		if (self.parametricCorrect() && self.slopeIntersectCorrect() && self.hesseCorrect() && self.implicitCorrect()) {
+		var paramCorrect = self.parametricCorrect();
+		var slopeCorrect = self.slopeIntersectCorrect();
+		var implCorrect = self.implicitCorrect();
+		var hesseCorrect = self.hesseCorrect();
+		if (!paramCorrect) {
+			console.log("parametric incorrect!");
+		}
+		if (!slopeCorrect) {
+			console.log("slope intersect incorrect!");
+		}
+		if (!implCorrect) {
+			console.log("implicit incorrect!");
+		}
+		if (!hesseCorrect) {
+			console.log("hesse incorrect");
+		}
+		if (paramCorrect && slopeCorrect && hesseCorrect && implCorrect) {
 			self.correct(true);
 		}
 		self.solved(true);
@@ -151,8 +167,8 @@ function LFCard() {
 	self.slopeIntersectBInput = ko.observable("");
 	
 	self.slopeIntersectCorrect = ko.computed(function() {
-		var mIn = Number(self.slopeIntersectMInput().trim());
-		var bIn = Number(self.slopeIntersectBInput().trim());
+		var mIn = Number(self.slopeIntersectMInput().trim().replace(",", "."));
+		var bIn = Number(self.slopeIntersectBInput().trim().replace(",", "."));
 		var si = self.slopeIntersect();
 		return eq(si.m, mIn) && eq(si.b, bIn);
 	});
