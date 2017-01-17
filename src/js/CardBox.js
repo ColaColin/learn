@@ -31,10 +31,10 @@ function CardBox() {
 		cardTypeMap[cardObj.typeName] = cardObj;
 	};
 	
-//	registerCardType(matmul);
+	registerCardType(matmul);
 	registerCardType(linerep);
-//	registerCardType(csa);
-//	registerCardType(lineIntersect);
+	registerCardType(csa);
+	registerCardType(lineIntersect);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);
