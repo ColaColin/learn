@@ -1,6 +1,7 @@
 var preloaded = require("../../../Preloaded");
 var ko = require("knockout");
 var math = require("./helpers/math");
+var DrawStuff = require("./helpers/drawstuff");
 
 function Card() {
 	var self = this;
@@ -19,6 +20,12 @@ function Card() {
 		return [rndVal(), rndVal()];
 	};
 	
+	self.drawing = new DrawStuff();
+	
+	self.bindingComplete = function() {
+		self.drawing.canvas(document.getElementById('canv'));
+	};
+	
 	self.pointA = ko.observable(rndPoint());
 	self.pointB = ko.observable(rndPoint());
 	self.pointC = ko.observable(rndPoint());
@@ -26,6 +33,16 @@ function Card() {
 	
 	self.intersection = ko.computed(function() {
 		return math.intersectLines(self.pointA(), self.pointB(), self.pointC(), self.pointD());
+	});
+	
+	
+	ko.computed(function() {
+		var a = self.pointA();
+		var b = self.pointB();
+		var c = self.pointC();
+		var d = self.pointD();
+		self.drawing.lines([{a: a, b: b, clr: "rgb(255, 0, 0)"}, 
+		                    {a: c, b: d, clr: "rgb(0,255,0)"}]);
 	});
 	
 	self.pointADisplay = math.makeVectorDisplay(self.pointA);

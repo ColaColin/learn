@@ -11,7 +11,12 @@ Intersection: <input data-bind="textInput: intersectionInput"/>
 <!-- ko if: solved -->
 <h3>Solution</h3>
 Intersection: <span data-bind="text: intersectionDisplay"></span>
+
 <!-- /ko -->
+
+<div>
+	<canvas id='canv' data-bind='visible: solved, attr: {width: drawing.width()+"px", height: drawing.height()+"px"}'></canvas>
+</div>
 
 <!-- ko if: showingHints -->
 
