@@ -1,20 +1,36 @@
 <div>Transformations. Do them.</div>
-	
-	<!-- ko with: drawing -->
-		<canvas id='canv' data-bind='attr: {width: width()+"px", height: height()+"px"}'></canvas>
-	<!-- /ko -->
-	
-	<br/>
-	
-<!-- ko if: solved -->
-todo: solved
+<div>Fill in the matrices that make up the transformation of the rectangle green to red.</div>
+<div>Hint: sin(45°) = cos(45°) is roughly 0.71. Scale is in 0.5 steps, translation only in integers</div>
+
+<!-- ko with: drawing -->
+	<canvas id='canv' data-bind='attr: {width: width()+"px", height: height()+"px"}'></canvas>
 <!-- /ko -->
+	
+<br/>
+
+Enter 3x3 matrices for translation, rotation, scale, translation:<br/>
+<textarea data-bind="textInput: translateText" style="width: 130px; height: 115px"></textarea>
+<textarea data-bind="textInput: rotationText" style="width: 160px; height: 115px"></textarea>
+<textarea data-bind="textInput: scaleText" style="width: 130px; height: 115px"></textarea>
+<textarea data-bind="textInput: firstTanslateText" style="width: 130px; height: 115px"></textarea>
+<br/>
+Remember in what direction they will be executed to transform a 2d point!
 
 <!-- ko if: showingHints -->
-todo: hints
+
+<br/>
+
+<br/>
+Helpful matrices are: <br/>
+Translation: $ \begin{pmatrix}  1 & 0 & t_x \\ 0 & 1 & t_y \\ 0 & 0 & 1 \end{pmatrix} $ <br/>
+Rotation: $ \begin{pmatrix}  cos(a) & -sin(a) & 0 \\ sin(a) & cos(a) & 0 \\ 0 & 0 & 1 \end{pmatrix} $<br/>
+Scaling: $ \begin{pmatrix}  s_x & 0 & 0 \\ 0 & s_y & 0 \\ 0 & 0 & 1 \end{pmatrix} $ <br/>
+
 <br/>
 
 <!-- /ko -->
+
+<br/>
 
 <!-- ko if: !showingHints() && !correct() -->
 <button class="btn btn-default" data-bind="click: giveHint">Help!</button>
@@ -34,6 +50,22 @@ todo: hints
 	<!-- ko ifnot: correct -->
 	<div class="bg-danger">Wrong!</div>
 	<!-- /ko -->
+
+<!-- /ko -->
+
+<!-- ko if: solved -->
+
+<br/>The correct translation, rotation, scale, translation are:<br/>
+
+<span data-bind="text: translateDisplay"></span> 
+<span data-bind="text: rotationDisplay"></span> 
+<span data-bind="text: scaleDisplay"></span> 
+<span data-bind="text: firstTranslateDisplay"></span> 
+<span> $ \begin{pmatrix} x \\ y \\ 1 \end{pmatrix} $ </span>
+
+<br/>
+Also shearing isn't used here, but may be of interest:<br/>
+Shearing: $ \begin{pmatrix}  1 &  s_1 & 0 \\ s_2 & 1 & 0 \\ 0 & 0 & 1  \end{pmatrix} $ <br/>
 
 <!-- /ko -->
 

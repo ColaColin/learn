@@ -30,6 +30,37 @@ function Card() {
 	self.translate = ko.observable([0,0]);
 	self.rotate = ko.observable(0);
 	
+	self.scaleMatrix = ko.computed(function() {
+		return m.mat3.fromScaling(m.mat3.create(), [self.scale(), self.scale()]);
+	});
+	
+	self.rotationMatrix = ko.computed(function() {
+		return m.mat3.fromRotation(m.mat3.create(), [(self.rotate() / 180) * Math.PI]);
+	});
+	
+	self.translationMatrix = ko.computed(function() {
+		return m.mat3.fromTranslation(m.mat3.create(), self.translate());
+	});
+	
+	self.firstTranslationMatrix = ko.computed(function() {
+		return m.mat3.fromTranslation(m.mat3.create(), self.firstTranslate());
+	});
+	
+	self.translateDisplay = math.makeMat3Display(self.translationMatrix);
+	self.firstTranslateDisplay = math.makeMat3Display(self.firstTranslationMatrix);
+	self.rotationDisplay = math.makeMat3Display(self.rotationMatrix);
+	self.scaleDisplay = math.makeMat3Display(self.scaleMatrix);
+	
+	self.translateText = ko.observable("");
+	self.firstTanslateText = ko.observable("");
+	self.rotationText = ko.observable("");
+	self.scaleText = ko.observable("");
+	
+	self.translateInput = math.makeMat3Input(self.translateText);
+	self.firstTranslateInput = math.makeMat3Input(self.firstTanslateText);
+	self.rotationInput = math.makeMat3Input(self.rotationText);
+	self.scaleInput = math.makeMat3Input(self.scaleText);
+	
 	var fillRandomModifications = function() {
 		// translation [+2, -2], rotation (0°, 45°), scale (0.5x, 2.5x)),
 		
@@ -43,10 +74,11 @@ function Card() {
 	};
 	
 	self.transformed = ko.computed(function() {
-		var scl = m.mat3.fromScaling(m.mat3.create(), [self.scale(), self.scale()]);
-		var rot = m.mat3.fromRotation(m.mat3.create(), [(self.rotate() / 180) * Math.PI]);
-		var trsA = m.mat3.fromTranslation(m.mat3.create(), self.firstTranslate());
-		var trsB = m.mat3.fromTranslation(m.mat3.create(), self.translate());
+		var scl = self.scaleMatrix();
+		var rot = self.rotationMatrix();
+		var trsA = self.firstTranslationMatrix();
+		var trsB = self.translationMatrix();
+		
 		var fi = m.mat3.mul(m.mat3.create(), scl, trsA);
 		fi = m.mat3.mul(m.mat3.create(), rot, fi);
 		fi = m.mat3.mul(m.mat3.create(), trsB, fi);
@@ -59,8 +91,6 @@ function Card() {
 		
 		return result;
 	});
-	
-	window.model = this;
 	
 	var updateDrawing = function() {
 		var a = self.qs();
@@ -89,10 +119,14 @@ function Card() {
 	};
 	nextExample();
 	
-	window.n = nextExample;
-	
 	self.showNew = function() {
 		nextExample()
+		
+		self.translateText("");
+		self.firstTanslateText("");
+		self.rotationText("");
+		self.scaleText("");
+		
 		self.correct(false);
 		self.showingHints(false);
 		self.solved(false);
@@ -106,7 +140,41 @@ function Card() {
 	};
 	
 	self.solve = function() {
-		var correct = false; // TODO
+		var tI = self.translateInput();
+		var tC = self.translationMatrix();
+		
+		var tEq = math.eqMat3(tI, tC);
+		
+		if (!tEq) {
+			console.log("t", tI, tC);
+		}
+		
+		var rI = self.rotationInput();
+		var rC = self.rotationMatrix();
+		
+		var rEq = math.eqMat3(rI, rC);
+		if (!rEq) {
+			console.log("r", rI, rC);
+		}
+		
+		var sI = self.scaleInput();
+		var sC = self.scaleMatrix();
+		
+		var sEq = math.eqMat3(sI, sC);
+		if (!sEq) {
+			console.log("s", sI, sC);
+		}
+		
+		var ftI = self.firstTranslateInput();
+		var ftC = self.firstTranslationMatrix();
+		
+		var ftEq = math.eqMat3(ftI, ftC);
+		if (!ftEq) {
+			console.log("ft", ftI, ftC);
+		}
+		
+		var correct = tEq && rEq && sEq && ftEq;
+		
 		self.correct(correct);
 		self.solved(true);
 		

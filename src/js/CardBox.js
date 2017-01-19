@@ -32,10 +32,10 @@ function CardBox() {
 		cardTypeMap[cardObj.typeName] = cardObj;
 	};
 	
-//	registerCardType(matmul);
-//	registerCardType(linerep);
-//	registerCardType(csa);
-//	registerCardType(lineIntersect);
+	registerCardType(matmul);
+	registerCardType(linerep);
+	registerCardType(csa);
+	registerCardType(lineIntersect);
 	registerCardType(transformations);
 	
 	var cardRankings = Object.create(null);
