@@ -2,6 +2,76 @@ var ko = require("knockout");
 var _ = require("lodash");
 var glm = require("gl-matrix");
 
+var print2dArray = function(ar) {
+	console.log(ar.map(function(a) {
+		return a.map(function(n) {return n.toFixed(2)}).join(" ");
+	}).join("\n"));
+};
+
+// the convolution is expected to be normalized already
+// assumes that +128 is needed if the kernel has a sum of 0 (high pass filters)
+// convolution is expected to be m x l
+// 2d array, 2d array, "inner" | "zero_extended" | "border_extended"
+var convolve2d = function(img2d, convolve2d, borderMode) {
+	if (!img2d || !convolve2d) {
+		return undefined;
+	}
+	
+	var sum = 0;
+	for (var i = 0; i < convolve2d.length; i++) {
+		for (var j = 0; j < convolve2d[i].length; j++) {
+			sum += convolve2d[i][j];
+		}
+	}
+	
+	normAdd = Math.abs(sum - 0) < 0.001 ? 128 : 0;
+	var getImgValue = function(x, y) {
+		if (x >= 0 && x < img2d[0].length &&
+				y >= 0 && y < img2d.length) {
+			return img2d[y][x];
+		} else if (borderMode === "border_extended") {
+			xb = Math.max(0, Math.min(img2d[0].length-1, x));
+			yb = Math.max(0, Math.min(img2d.length-1, y));
+			return img2d[yb][xb];
+		} else if (borderMode === "zero_extended"){
+			return 0;
+		} else {
+			return null;
+		}
+	};
+	
+	var result = JSON.parse(JSON.stringify(img2d));
+	
+	var l = (convolve2d[0].length-1) / 2;
+	var m = (convolve2d.length-1) / 2;
+	
+	for (var y = 0; y < img2d.length; y++) {
+		for (var x = 0; x < img2d[0].length; x++) {
+			
+			var badPix = false;
+			var newValue = 0;
+			for (var mi = -m; mi <= m && !badPix; mi++) {
+				for (var li = -l; li <= l && !badPix; li++) {
+					var px = getImgValue(x + li, y + mi);
+					if (px !== null) {
+						newValue += convolve2d[mi + m][li + l] * px;
+					} else { // sort of lazy
+						badPix = true;
+					}
+				}
+			}
+			if (badPix) {
+				result[y][x] = 0;
+			} else {
+				result[y][x] = Math.floor(newValue) + normAdd;
+			}
+			
+		}
+	}
+	
+	return result;
+};
+
 var eq = function(a, b) {
 	var d = Math.abs(a - b);
 	return d < 0.0101;
@@ -179,5 +249,6 @@ module.exports = {
 	rndPoint: rndPoint,
 	makeMat3Display: makeMat3Display,
 	makeMat3Input: makeMat3Input,
-	eqMat3: eqMat3
+	eqMat3: eqMat3,
+	convolve2d: convolve2d
 };

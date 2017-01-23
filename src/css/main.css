@@ -13,3 +13,19 @@
 .lines:nth-child(odd) {
 	background-color: #f2f2f2
 }
+
+.italic{
+	font-style: italic;
+}
+
+.red {
+	background-color: red;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}

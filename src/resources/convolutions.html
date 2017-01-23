@@ -1,0 +1,137 @@
+<div>Given is a 5x5 field of pixel values. <br/>
+Transform the marked pixel using a <span class="italic" data-bind="text: applyFilterName"></span> 3x3 convolution filter. <br/>
+If the filter requires it recenter the 
+values between 0 and 255. <br/> Use floor to cut the numbers back into integer form. <br/>
+Use <span class="italic" data-bind="text: borderMode"></span> borderhandling if necessary.
+<br/>
+Also decide if the filter is a high or a low pass filter.
+
+</div>
+
+<h4>The input image</h4>
+<table>
+<tbody >
+	<!-- ko foreach: baseImage -->
+		<tr> 
+			<!-- ko if: $index() == $parent.pixel()[1] -->
+				<!-- ko foreach: $data -->
+					<td style="width: 42px" data-bind="text: $data, css: {red: $root.pixel()[0] == $index()}"></td>
+				<!-- /ko -->
+			<!-- /ko -->
+			<!-- ko ifnot: $index() == $parent.pixel()[1] -->
+				<!-- ko foreach: $data -->
+					<td style="width: 42px" data-bind="text: $data"></td>
+				<!-- /ko -->
+			<!-- /ko -->
+		</tr>
+	<!-- /ko -->
+</tbody>
+</table>
+
+<h4>Your answers</h4>
+The new value of the field is supposed to be <input data-bind="textInput: pixelInput" /><br/>
+<span class="italic" data-bind="text: applyFilterName"></span>
+ is a <select data-bind="options: ['high', 'low', ''], value: filterTypeInput"></select> pass filter. <br/>
+
+<!-- ko if: solved -->
+
+<h4>The resulting image </h4>
+<table>
+<tbody >
+	<!-- ko foreach: resultImage -->
+		<tr> 
+			<!-- ko if: $index() == $parent.pixel()[1] -->
+				<!-- ko foreach: $data -->
+					<td style="width: 42px" data-bind="text: $data, css: {red: $root.pixel()[0] == $index()}"></td>
+				<!-- /ko -->
+			<!-- /ko -->
+			<!-- ko ifnot: $index() == $parent.pixel()[1] -->
+				<!-- ko foreach: $data -->
+					<td style="width: 42px" data-bind="text: $data"></td>
+				<!-- /ko -->
+			<!-- /ko -->
+		</tr>
+	<!-- /ko -->
+</tbody>
+</table>
+
+<span class="italic" data-bind="text: applyFilterName"></span> is a <span data-bind="text: applyFilterType"></span> pass filter.
+
+<br/>
+<!-- /ko -->
+
+<!-- ko if: showingHints -->
+
+<h2>Border handling</h2>
+
+Zero extended: Extend the image with all 0s <br/>
+
+Border extended: Extend the image with the closest image pixels, using a l1 distance. <br/>
+
+Inner: All pixels that would need to read outside of the image are set to 0. The new image will have a border and be smaller. <br/>
+
+<br/>
+
+<h2>The filters</h2>
+
+<br/>
+Low pass filters have a sum of 1. They tend to blur out the image, suppressing high frequencies.
+<br/>
+<br/>
+
+<h4>The mean filter</h4>
+
+$ \frac{1}{9} \begin{pmatrix} 1 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1  \end{pmatrix} $
+
+<h4>The gauss filter</h4>
+$ \frac{1}{24} \begin{pmatrix} 1 & 3 & 1 \\ 3 & 8 & 3 \\ 1 & 3 & 1 \end{pmatrix} $
+
+<h4>The binomial filter</h4>
+$ \frac{1}{16} \begin{pmatrix} 1 & 2 & 1 \\ 2 & 4 & 2 \\ 1 & 2 & 1 \end{pmatrix} $
+
+<br/>
+<br/>
+<br/>
+High pass filters have a sum of 0. They suppress low frequencies and amplify edges and noise.
+<br/>
+
+<h4>The centered gradient x</h4>
+$ \frac{1}{2} \begin{pmatrix} 0 & 0 & 0 \\ -0.5 & 0 & 0.5 \\ 0 & 0 & 0 \end{pmatrix} $
+
+<h4>The centered gradient y</h4>
+$ \frac{1}{2} \begin{pmatrix} 0 & -0.5 & 0 \\ 0 & 0 & 0 \\ 0 & 0.5 & 0 \end{pmatrix} $
+
+<h4>Sobel x</h4>
+$ \frac{1}{8} \begin{pmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1 \end{pmatrix} $
+
+<h4>Sobel y</h4>
+$ \frac{1}{8} \begin{pmatrix} -1 & -2 & -1 \\ 0 & 0 & 0 \\ 1 & 2 & 1 \end{pmatrix} $
+
+<h4>laplace</h4>
+$ \frac{1}{8} \begin{pmatrix} 0 & -1 & 0 \\ -1 & 4 & -1 \\ 0 & -1 & 0 \end{pmatrix} $
+
+<br/>
+
+<!-- /ko -->
+
+<!-- ko if: !showingHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
+

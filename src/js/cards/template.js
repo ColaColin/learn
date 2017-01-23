@@ -11,6 +11,10 @@ function Card() {
 		resultCb = cb;
 	};
 
+	self.correct = ko.observable(false);
+	self.showingHints = ko.observable(false);
+	self.solved = ko.observable(false);
+	
 	self.showNew = function() {
 		
 		self.correct(false);
