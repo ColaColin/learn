@@ -23,6 +23,7 @@ var csa = require("./cards/cohensutherland.js");
 var lineIntersect = require("./cards/lineIntersect.js");
 var transformations = require("./cards/transformations.js");
 var convolutions = require("./cards/convolutions.js");
+var cyrusbeck = require("./cards/cyrusbeck.js");
 
 function CardBox() {
 	
@@ -39,6 +40,7 @@ function CardBox() {
 	registerCardType(lineIntersect);
 	registerCardType(transformations);
 	registerCardType(convolutions);
+	registerCardType(cyrusbeck);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);

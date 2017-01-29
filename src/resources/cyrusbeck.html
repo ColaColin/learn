@@ -1,0 +1,68 @@
+<div>Given the following triangle and line use the Cyrus Beck clipping algorithmn to clip the line inside the triangle</div>
+
+<div>
+	Triangle with points 
+	<span data-bind="text: tri0Display"></span>,
+	<span data-bind="text: tri1Display"></span>,
+	<span data-bind="text: tri2Display"></span><br/>
+	
+	Linesegment with points:
+	<span data-bind="text: line0Display"></span>,
+	<span data-bind="text: line1Display"></span>
+</div>
+
+<div>
+Entering point: <input data-bind="textInput: clippedInputA" /><br/>
+Leaving point: <input data-bind="textInput: clippedInputB" /><br/>
+</div>
+
+<div>
+	<canvas id='canv' data-bind='visible: solved, attr: {width: drawing.width()+"px", height: drawing.height()+"px"}'></canvas>
+</div>
+
+
+<!-- ko if: solved -->
+
+The correct line is entering at <span data-bind="text: clipped0Display"></span> 
+and leaving at <span data-bind="text: clipped1Display"></span>
+
+<br/>
+
+<!-- /ko -->
+
+<!-- ko if: showingHints -->
+
+1. Transform Lines into parametric form $ L_0 + \lambda * \Delta L $ <br/>
+2. Determine the implicit form of the edges, so a normal $N_e$ and a point on the line $P_e$ <br/>
+3. Use the formula that basically does a line intersection: <br/>
+$ \lambda_e = (N_e \cdot (P_e - L_0)) / (N_e \cdot \Delta L) $ <br/>
+
+4. Use those $\lambda$-values to determine the potential intersections. <br/> 
+5. They are potentially entering if $N_e \cdot \Delta L \lt 0$ else they are potentially leaving. <br/>
+6. Take the last entering and the first leaving, ordered by the $\lambda$ values. <br/>
+
+<br/>
+
+<!-- /ko -->
+
+<!-- ko if: !showingHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
+

@@ -20,7 +20,7 @@ function DrawStuff() {
 		}
 	};
 	
-	// array of elements: {a: [x,y], b: [x,y], clr: stroke-string}
+	// array of elements: {a: [x,y], b: [x,y], clr: stroke-string, isSegment: true}
 	self.lines = ko.observable([]/*[{a: [0, 0], b: [-3,-3], clr: "rgb(255, 0, 0)"}, {a: [1, 0], b: [0,3], clr: "rgb(0, 255, 0)"}]*/);
 	// array of elements: {vecs: [[x,y],...], clr: stroke-string}
 	self.polygons = ko.observable([] /*[{vecs: [[1,1], [3,6], [3,0], [-2, -2]], clr: "rgb(255,0,0)"}]*/);
@@ -120,7 +120,11 @@ function DrawStuff() {
 		
 		for (var i = 0; i < lines.length; i++) {
 			var line = lines[i];
-			var ll = getLongerLine(line.a, line.b);
+			if (!line.isSegment) {
+				var ll = getLongerLine(line.a, line.b);
+			} else {
+				ll = [line.a, line.b];
+			}
 			drawLine(ll[0], ll[1], line.clr, line.width);
 		}
 	};

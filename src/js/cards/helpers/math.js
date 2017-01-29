@@ -181,12 +181,12 @@ var makeVarDisplay = function(name, observe) {
 };
 
 var vecsEqual = function(a, b) {
-	return eq(a[0], b[0]) && eq(a[1], b[1]) && a.length === 2 && b.length === 2;
+	return a != null && b != null && a.length === 2 && b.length === 2 && eq(a[0], b[0]) && eq(a[1], b[1]);
 };
 
 var parseVector = function(str) {
 	if (str == null || str.length == 0) {
-		str = "0";
+		str = "0 0";
 	}
 	return str.trim().replace(",", ".").split(/ +/).map(Number);
 };
@@ -236,6 +236,19 @@ var rndPoint = function(fac) {
 	return [rndVal() * fac, rndVal() * fac];
 };
 
+
+var rndR = function(start, end) {
+	if (start > end) {
+		var tmp = start;
+		start = end;
+		end = tmp;
+	}
+	var d = end - start;
+	console.log(d);
+	var r = Math.random() * d;
+	return start + r;
+};
+
 module.exports = {
 	makeMatrixDisplay: makeMatrixDisplay,
 	makeVectorDisplay: makeVectorDisplay,
@@ -250,5 +263,6 @@ module.exports = {
 	makeMat3Display: makeMat3Display,
 	makeMat3Input: makeMat3Input,
 	eqMat3: eqMat3,
-	convolve2d: convolve2d
+	convolve2d: convolve2d,
+	rndFrom: rndR,
 };
