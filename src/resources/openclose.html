@@ -1,0 +1,46 @@
+<div><span data-bind="if: doOpening">Open</span> <span data-bind="ifnot: doOpening">Close</span>!</div>
+<div>White is foreground</div>
+
+<div>
+	<canvas id='canv' data-bind='click: pxboard.click, attr: {width: pxboard.width()+"px", height: pxboard.height()+"px"}'></canvas>
+</div>
+
+<div data-bind="visible: solved">
+	Correct result is:<br/>
+	<canvas id='rscanv' data-bind='click: rsboard.click, attr: {width: rsboard.width()+"px", height: rsboard.height()+"px"}'></canvas>
+</div>
+
+<!-- ko if: solved -->
+
+<!-- /ko -->
+
+<!-- ko if: showingHints -->
+Erosion: Removes foreground if there is any background in 8-neighbourhood<br/>
+Dilation: Adds forground if there is any foreground in the 8-neighbourhood<br/>
+Opening: First erosion than dilation<br/>
+Closing: First dilation than erosion<br/>
+<br/>
+
+<!-- /ko -->
+
+<!-- ko if: !showingHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
+

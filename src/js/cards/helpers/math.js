@@ -74,7 +74,7 @@ var convolve2d = function(img2d, convolve2d, borderMode) {
 
 var eq = function(a, b) {
 	var d = Math.abs(a - b);
-	return d < 0.0101;
+	return d < 0.0501;
 };
 
 var eqMat3 = function(a, b) {
