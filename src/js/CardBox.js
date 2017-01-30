@@ -17,13 +17,13 @@ var ko = require("knockout");
 
 var _ = require("lodash");
 
-//var matmul = require("./cards/matrixMultiplication");
-//var linerep = require("./cards/line-forms.js");
-//var csa = require("./cards/cohensutherland.js");
-//var lineIntersect = require("./cards/lineIntersect.js");
-//var transformations = require("./cards/transformations.js");
-//var convolutions = require("./cards/convolutions.js");
-//var cyrusbeck = require("./cards/cyrusbeck.js");
+var matmul = require("./cards/matrixMultiplication");
+var linerep = require("./cards/line-forms.js");
+var csa = require("./cards/cohensutherland.js");
+var lineIntersect = require("./cards/lineIntersect.js");
+var transformations = require("./cards/transformations.js");
+var convolutions = require("./cards/convolutions.js");
+var cyrusbeck = require("./cards/cyrusbeck.js");
 var openclose = require("./cards/openclose.js");
 
 function CardBox() {
