@@ -25,6 +25,7 @@ var transformations = require("./cards/transformations.js");
 var convolutions = require("./cards/convolutions.js");
 var cyrusbeck = require("./cards/cyrusbeck.js");
 var openclose = require("./cards/openclose.js");
+var areamoments = require("./cards/areamoments.js");
 
 function CardBox() {
 	
@@ -43,6 +44,7 @@ function CardBox() {
 	registerCardType(convolutions);
 	registerCardType(cyrusbeck);
 	registerCardType(openclose);
+	registerCardType(areamoments);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);

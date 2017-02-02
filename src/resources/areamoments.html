@@ -1,0 +1,68 @@
+<div>
+Calculate the area, the centroid and the 2nd degree central are moments! <br/>
+White is foreground, coordinates start at 1,1 in the top left corner.</div>
+
+<div>
+	<canvas id='canv' data-bind='click: pxboard.click, attr: {width: pxboard.width()+"px", height: pxboard.height()+"px"}'></canvas>
+</div>
+
+Area: <input data-bind="textInput: m00In"/> <br/>
+center x: <input data-bind="textInput: m10m00In"/> <br/>
+center y: <input data-bind="textInput: m01m00In"/> <br/>
+$\mu_{20}$: <input data-bind="textInput: y20In"/> <br/>
+$\mu_{02}$: <input data-bind="textInput: y02In"/> <br/>
+$\mu_{11}$: <input data-bind="textInput: y11In"/> <br/>
+
+<!-- ko if: solved -->
+<div>
+The solutions are:<br/>
+<span data-bind="text: m00Display"></span><br/>
+<span data-bind="text: m10m00Display"></span><br/>
+<span data-bind="text: m01m00Display"></span><br/>
+<span data-bind="text: y20Display"></span><br/>
+<span data-bind="text: y02Display"></span><br/>
+<span data-bind="text: y11Display"></span>
+</div>
+
+<!-- /ko -->
+
+<!-- ko if: showingHints() || solved() -->
+
+<hr/>
+
+In general $ m_{pq} = \sum_{(i,j) \in S} i^p j^q I(i, j) $ <br/>
+In binary images $ I(i, j) $ is always 1. <br/>
+
+Area is $ m_{00} $ <br/>
+Centroid x is $ \frac{m_{10}}{m_{00}} $ <br/>
+Centroid y is $ \frac{m_{01}}{m_{00}} $ <br/>
+
+The translationally invariant central area moments are defined as: <br/>
+$c_x$ is the centroid x, $c_y$ is the centroid y,<br/>
+$ \mu_{pq} = \sum_{(i,j) \in S} (i - c_x)^p (j - c_y)^q $ <br/>
+
+<br/>
+
+<!-- /ko -->
+
+<!-- ko if: !showingHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
+
