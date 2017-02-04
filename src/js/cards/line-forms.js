@@ -40,8 +40,8 @@ function LFCard() {
 		self.implicitNInput("");
 		self.implicitPInput("");
 		
-		self.pointA([0, 1]);
-		self.pointB([-3, 3]);
+//		self.pointA([0, 1]);
+//		self.pointB([-3, 3]);
 	};
 	
 	self.giveHint = function() {
