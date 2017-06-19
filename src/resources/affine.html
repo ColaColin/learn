@@ -1,0 +1,51 @@
+<div>Recollect key points about affine spaces. Write them down.</div>
+
+
+<!-- ko if: solved -->
+
+<ul>
+<li>
+for each ordered pair $(p,q) \in A^n$ there is a $v \in V^n$ with $v =(\vec{pq})$
+</li>
+<li>
+for each $p$ and each $v$ exists exactly one point $q = p + v$
+</li>
+<li>
+Vector addition: if $v = (\vec{pq})$ and $w = (\vec{qr}) then $v + w = (\vec{pr})$
+</li>
+</ul>
+
+<div>
+A set $(o, e_1, e_2, ..., e_n)$ with a point $o \in A^n$ and a base $(e_1,...,e_n)$ of the vector space $V^n$
+is called coordinate system of the affine space $A^n$.<br/>
+
+Given a coordinate system $(o, e_1, e_2, ..., e_n)$ for each point $p \in A^n$ there is a position vector 
+$v = (o, p)$. The points $p_i = o + e_i$ are called unitpoints. The set $(o, p1, ..., p_n)$ is called affine base.
+
+<br/>
+
+Given an affine space with a basis any arbitrary point can be represented as a linear combination of the basis and 
+the origin. 
+</div>
+<br/>
+<div>
+The set $\{ v \in V | v = \sum_{i=0}^{n} \lambda_i v_i, with \sum_{i = 0}^{n} \lambda_i = 1 \}$ is called affine combination
+of the vectors $v_i$
+</div>
+<br/>
+<div>
+The set $co\{p_0, ..., o_n\} = \{ p | p = \sum_{i = 0}^{n} \lambda_i p_i, \sum_{i=0}^{n} \lambda_i = 1, with \lambda_i \geq 0, i = 0, ..., n \}$
+is called convex hull of the points $p_0,...,p_n$.
+</div>
+
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Show solution</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">OK</button>
+	<button class="btn btn-default" data-bind="click: failed">I got it wrong</button>
+<!-- /ko -->
+
