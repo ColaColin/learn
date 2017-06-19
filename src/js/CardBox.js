@@ -55,7 +55,7 @@ function CardBox() {
 		var cards = [];
 		_.each(cardTypeMap, function(card, typeName) {
 			var rankings = cardRankings[typeName];
-			if (!rankings || rankings.lastsession + rankings.interval <= self.sessionNumber()) {
+			if (!rankings || (rankings.enabled && rankings.lastsession + rankings.interval <= self.sessionNumber())) {
 				cards.push(card);
 			}
 		});
@@ -67,6 +67,11 @@ function CardBox() {
 			var store = JSON.parse(localStorage.store);
 			self.sessionNumber(store.sessionNumber);
 			cardRankings = store.cardRankings;
+			_.forEach(cardRankings, function(v) {
+				if (v.enabled === undefined) {
+					v.enabled = true;
+				}
+			});
 		}
 	};
 	
@@ -76,7 +81,7 @@ function CardBox() {
 			cardRankings: cardRankings
 		});
 	};
-	
+
 	self.currentSessionTodo = ko.observable([]);
 	
 	self.remainingInSession = ko.computed(function() {
@@ -91,19 +96,29 @@ function CardBox() {
 		self.sessionNumber(self.sessionNumber() + 1);
 		save();
 		self.currentSessionTodo(getSessionCards());
-		if (self.remainingInSession() === 0) {
-			self.nextSession();
-		}
 	};
 	
 	var getCardRankings = function(typeName) {
-		return cardRankings[typeName] || {interval: 1, points: 1, lastsession: -1};
+		if (!cardRankings[typeName]) {
+			cardRankings[typeName] = {interval: 1, points: 1, lastsession: -1, enabled: true}; 
+		}
+		return cardRankings[typeName];
+	};
+
+	self.bindEnabledFor = function(typeName) {
+		var obs = ko.observable(getCardRankings(typeName).enabled);
+		obs.subscribe(function(val) {
+			getCardRankings(typeName).enabled = val;
+			save();
+		});
+		return obs;
 	};
 	
 	self.getCardRankings = getCardRankings;
 	
 	self.currentCard = ko.computed(function() {
-		var card = self.currentSessionTodo()[0]; 
+		var card = self.currentSessionTodo()[0];
+		
 		if (card) {
 			card.taskModel.showNew();
 			setTimeout(function() {

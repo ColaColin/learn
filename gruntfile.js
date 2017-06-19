@@ -128,7 +128,7 @@ module.exports = function (grunt) {
           ]
         },
         images: { files:
-            [ { expand: true, cwd: 'src/images/', src: ['*.png', '*.xml', '*.ico'], dest: 'build/images' }
+            [ { expand: true, cwd: 'src/images/', src: ['*.svg', '*.png', '*.xml', '*.ico'], dest: 'build/images' }
             ]
           },
           css: { files:
