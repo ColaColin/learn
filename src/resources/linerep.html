@@ -5,7 +5,7 @@
 <h2>The parametric form?</h2>
 <div>Start: <input data-bind="textInput: parametricStartInput"/>, 
 	Delta: <input data-bind="textInput: parametricDeltaInput"/> </div>
-<!-- ko if: showHints -->
+<!-- ko if: showHints() || solved() -->
 <div class="bg-info">$ \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} A_x \\ A_y \end{pmatrix} + t \begin{pmatrix} B_x - A_x \\ B_y - A_y \end{pmatrix} $</div>
 <!-- /ko -->
 <!-- ko if: solved -->
@@ -16,7 +16,7 @@
 <div>
 m: <input data-bind="textInput: slopeIntersectMInput" />, b: <input data-bind="textInput: slopeIntersectBInput" />
 </div>
-<!-- ko if: showHints -->
+<!-- ko if: showHints() || solved() -->
 <div class="bg-info">If possible use $y = mx + b$, else x = b. <br/>
 	slope $m = \frac{B_y - A_y}{B_x - A_x}, B_x - A_x \neq 0; else\ m = 0 $ <br/> intersect $ b = A_y - mA_x = B_y - mB_x $ </div>
 <!-- /ko -->
@@ -28,7 +28,7 @@ m: <input data-bind="textInput: slopeIntersectMInput" />, b: <input data-bind="t
 <div>
 n: <input data-bind="textInput: hesseNInput" />, d: <input data-bind="textInput: hesseDInput"/>
 </div>
-<!-- ko if: showHints -->
+<!-- ko if: showHints() || solved() -->
 <div class="bg-info">$ n ^ T p = d$ for all points p on the line<br/>
 normal $n = \begin{pmatrix} A_y - B_y \\ B_x - A_x \end{pmatrix} * \frac{1}{||B-A||}, ||n|| = 1 $ <br/>
 distance $d = n^T p_0 = n^T p_1 \ge 0 $ <br/>
@@ -43,14 +43,14 @@ If d happens to be below 0, multiply n and d by -1.
 <div>
 n: <input data-bind="textInput: implicitNInput" />, p0: <input data-bind="textInput: implicitPInput" />
 </div>
-<!-- ko if: showHints -->
+<!-- ko if: showHints() || solved() -->
 <div class="bg-info">$ n^T(p - A) = 0, n := \begin{pmatrix} A_y - B_y \\ B_x - A_x \end{pmatrix} $ for all points p on the line</div>
 <!-- /ko -->
 <!-- ko if: solved -->
 <div><span data-bind="html: implicitDisplay"></span></div>
 <!-- /ko -->
 
-<!-- ko if: !showHints() && !correct() -->
+<!-- ko if: !solved() && !showHints() && !correct() -->
 <button class="btn btn-default" data-bind="click: giveHint">Help!</button>
 <!-- /ko -->
 

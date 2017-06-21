@@ -27,6 +27,7 @@ var cyrusbeck = require("./cards/cyrusbeck.js");
 var openclose = require("./cards/openclose.js");
 var areamoments = require("./cards/areamoments.js");
 var affinespaces = require("./cards/affine.js");
+var barycenter = require("./cards/barycentric.js");
 
 function CardBox() {
 	
@@ -47,6 +48,7 @@ function CardBox() {
 	registerCardType(openclose);
 	registerCardType(areamoments);
 	registerCardType(affinespaces);
+	registerCardType(barycenter);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);

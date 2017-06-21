@@ -1,0 +1,75 @@
+<div>Given is a triangle and a point. Calculate part of the barycentric coordinates of the point within the triangle.</div>
+
+<div>
+Triangle:<br/>
+p0: <span data-bind="text: p0Display"></span>
+p1: <span data-bind="text: p1Display"></span>
+p2: <span data-bind="text: p2Display"></span>
+<br/><br/>
+Point p: <span data-bind="text: pDisplay"></span><br/>
+</div>
+
+<div>
+<!-- ko if: target() === 0 -->
+$\lambda_0:$ <input data-bind="textInput: l0In" /> <br/>
+<!-- /ko -->
+<!-- ko if: target() === 1 -->
+$\lambda_1:$ <input data-bind="textInput: l1In" /> <br/>
+<!-- /ko -->
+<!-- ko if: target() === 2 -->
+$\lambda_2:$ <input data-bind="textInput: l2In" /> <br/>
+<!-- /ko -->
+</div>
+
+<!-- ko if: solved -->
+<h3>Solution</h3>
+$\lambda_0:$ <span data-bind="text: lambda0().toFixed(2)"></span><br/>
+$\lambda_1:$ <span data-bind="text: lambda1().toFixed(2)"></span><br/>
+$\lambda_2:$ <span data-bind="text: lambda2().toFixed(2)"></span><br/>
+<!-- /ko -->
+
+<!-- ko if: showingHints() || solved() -->
+
+Barycentric coordinates for points within a triangle, or any other object, are always within [0,1] and sum up to 1. (Partition of the 1).<br/>
+They can be calculated using area relationships like this:
+
+$\lambda0 = A(\triangle(p,p_1, p_2))/A(\triangle(p_0, p_1, p_2)))$<br/>
+$\lambda1 = A(\triangle(p_0,p, p_2))/A(\triangle(p_0, p_1, p_2)))$<br/>
+$\lambda2 = A(\triangle(p_0,p_1, p))/A(\triangle(p_0, p_1, p_2)))$<br/>
+<br/>
+The area of a triangle can be found using the cross product:<br/>
+Remember the cross product of 3d vectors is:<br/>
+$\vec{a} \times \vec{b} = \begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix} \times \begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix} = \begin{pmatrix} a_2b_3 - a_3b_2 \\ a_3b_1 - a_1b_3 \\ a_1b_2 - a_2b_1 \end{pmatrix}$
+It stands on the plane created by a and b and its length equals the area of the parallelogram created by a and b.<br/>
+Half that area is the area of the triangle:<br/>
+$A(\triangle(p_0, p_1, p_2)) = \frac{1}{2} | (p_1 - p_0) \times (p_2 - p_0)|$<br/>
+
+By embedding the 2d points in the $z = 0$ plane and simplifying the area of a 2d triangle is:<br/>
+
+$ \frac{1}{2} | (x_1 - x_0)(y_2 - y_0) - (y_1 - y_0)(x_2 - x_0) |$<br/>
+
+<br/>
+
+<!-- /ko -->
+
+<!-- ko if: !solved() && !showingHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
+

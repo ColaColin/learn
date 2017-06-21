@@ -5,13 +5,13 @@
 todo: solved
 <!-- /ko -->
 
-<!-- ko if: showingHints -->
+<!-- ko if: showingHints() || solved() -->
 todo: hints
 <br/>
 
 <!-- /ko -->
 
-<!-- ko if: !showingHints() && !correct() -->
+<!-- ko if: !solved() && !showingHints() && !correct() -->
 <button class="btn btn-default" data-bind="click: giveHint">Help!</button>
 <!-- /ko -->
 

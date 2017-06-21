@@ -16,7 +16,7 @@ Enter 3x3 matrices for translation, rotation, scale, translation:<br/>
 <br/>
 Remember in what direction they will be executed to transform a 2d point!
 
-<!-- ko if: showingHints -->
+<!-- ko if: showingHints() || solved() -->
 
 <br/>
 
@@ -32,7 +32,7 @@ Scaling: $ \begin{pmatrix}  s_x & 0 & 0 \\ 0 & s_y & 0 \\ 0 & 0 & 1 \end{pmatrix
 
 <br/>
 
-<!-- ko if: !showingHints() && !correct() -->
+<!-- ko if: !solved() && !showingHints() && !correct() -->
 <button class="btn btn-default" data-bind="click: giveHint">Help!</button>
 <!-- /ko -->
 

@@ -30,7 +30,7 @@ and leaving at <span data-bind="text: clipped1Display"></span>
 
 <!-- /ko -->
 
-<!-- ko if: showingHints -->
+<!-- ko if: showingHints() || solved() -->
 
 1. Transform Lines into parametric form $ L_0 + \lambda * \Delta L $ <br/>
 2. Determine the implicit form of the edges, so a normal $N_e$ and a point on the line $P_e$ <br/>
@@ -45,7 +45,7 @@ $ \lambda_e = (N_e \cdot (P_e - L_0)) / (N_e \cdot \Delta L) $ <br/>
 
 <!-- /ko -->
 
-<!-- ko if: !showingHints() && !correct() -->
+<!-- ko if: !solved() && !showingHints() && !correct() -->
 <button class="btn btn-default" data-bind="click: giveHint">Help!</button>
 <!-- /ko -->
 

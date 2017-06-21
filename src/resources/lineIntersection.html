@@ -18,7 +18,7 @@ Intersection: <span data-bind="text: intersectionDisplay"></span>
 	<canvas id='canv' data-bind='visible: solved, attr: {width: drawing.width()+"px", height: drawing.height()+"px"}'></canvas>
 </div>
 
-<!-- ko if: showingHints -->
+<!-- ko if: showingHints() || solved() -->
 
 Set equal the two line equations and solve them.<br/>
 For example with the implicit form: <br/>
@@ -34,7 +34,7 @@ $ n2^Tp + d2 = 0 $ <br/>
 <!-- /ko -->
 
 
-<!-- ko if: !showingHints() && !correct() -->
+<!-- ko if: !solved() && !showingHints() && !correct() -->
 <button class="btn btn-default" data-bind="click: giveHint">Help!</button>
 <!-- /ko -->
 

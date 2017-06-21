@@ -29,7 +29,7 @@ Line is: <span data-bind="text: lineState"></span>
 <br/>
 <!-- /ko -->
 
-<!-- ko if: showingHints -->
+<!-- ko if: showingHints() || solved() -->
 The Cohen Sutherland Algorithm determines a simple code for each point of a line segment
 that encodes where it is relative to the clipping window.<br/>
 Given a point $P = (x, y)$, the out code bits $b_1 b_2 b_3 b_4$ are:<br/>
@@ -45,7 +45,7 @@ else it intersects the window and needs further clipping.
 
 <!-- /ko -->
 
-<!-- ko if: !showingHints() && !correct() -->
+<!-- ko if: !solved() && !showingHints() && !correct() -->
 <button class="btn btn-default" data-bind="click: giveHint">Help!</button>
 <!-- /ko -->
 

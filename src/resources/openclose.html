@@ -1,5 +1,6 @@
 <div><span data-bind="if: doOpening">Open</span> <span data-bind="ifnot: doOpening">Close</span>!</div>
 <div>White is foreground</div>
+<div>The outside is considered background</div>
 
 <div>
 	<canvas id='canv' data-bind='click: pxboard.click, attr: {width: pxboard.width()+"px", height: pxboard.height()+"px"}'></canvas>
@@ -14,7 +15,7 @@
 
 <!-- /ko -->
 
-<!-- ko if: showingHints -->
+<!-- ko if: showingHints() || solved() -->
 Erosion: Removes foreground if there is any background in 8-neighbourhood<br/>
 Dilation: Adds forground if there is any foreground in the 8-neighbourhood<br/>
 Opening: First erosion than dilation<br/>
@@ -23,7 +24,7 @@ Closing: First dilation than erosion<br/>
 
 <!-- /ko -->
 
-<!-- ko if: !showingHints() && !correct() -->
+<!-- ko if: !solved() && !showingHints() && !correct() -->
 <button class="btn btn-default" data-bind="click: giveHint">Help!</button>
 <!-- /ko -->
 

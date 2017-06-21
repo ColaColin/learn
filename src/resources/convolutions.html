@@ -60,7 +60,7 @@ The new value of the field is supposed to be <input data-bind="textInput: pixelI
 <br/>
 <!-- /ko -->
 
-<!-- ko if: showingHints -->
+<!-- ko if: showingHints() || solved() -->
 
 <h2>Border handling</h2>
 
@@ -114,7 +114,7 @@ $ \frac{1}{8} \begin{pmatrix} 0 & -1 & 0 \\ -1 & 4 & -1 \\ 0 & -1 & 0 \end{pmatr
 
 <!-- /ko -->
 
-<!-- ko if: !showingHints() && !correct() -->
+<!-- ko if: !solved() && !showingHints() && !correct() -->
 <button class="btn btn-default" data-bind="click: giveHint">Help!</button>
 <!-- /ko -->
 
