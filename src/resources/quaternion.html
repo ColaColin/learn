@@ -1,0 +1,83 @@
+<div>Recollect stuff about Quaternions!</div>
+<br/><br/>
+
+<div>What is a quaternion? ijk form?</div>
+<!-- ko if: solved -->
+A quaternion has 4 components: $ a = (q_0, q_1, q_2, q_3) $<br/>
+It is useful to represent as the scalar component and a 3d vector: $ (q_0, q) $ with $q = (q_1, q_2, q_3)$.<br/>
+Similar to complex numbers it can be represented as a sum and a few rules:<br/>
+$a = (q_0 + iq_1 + jq_2 + kq_3)$ mit $i^2 = j^2 = k^2 = ijk = -1$<br/>
+<!-- /ko -->
+<hr/>
+<div>How do you add quaternions together?</div>
+<!-- ko if: solved -->
+Quaternions a and b:<br/>
+$a = (q_0, q)$<br/>
+$b = (p_0, p)$<br/>
+The sum then is: $a + b = (q_0 + p_0, q+p)$<br/>
+<!-- /ko -->
+<hr/>
+<div>How can you multiply quaternions?</div>
+<!-- ko if: solved -->
+Quaternions a and b:<br/>
+$a = (q_0, q)$<br/>
+$b = (p_0, p)$<br/>
+$a \cdot b = (p_0 q_0 - p \cdot q, q_0 p + p_0 q + p \times q)$<br/>
+<!-- /ko -->
+<hr/>
+<div>What is the multiplicative identity for quaternions?</div>
+<!-- ko if: solved -->
+$(1, 0)$<br/>
+<!-- /ko -->
+<hr/>
+<div>How is the conjugate defined?</div>
+<!-- ko if: solved -->
+Quaternion $a = (q_0, q)$<br/>
+Conjugate $a^* = (q_0, -q)$ <br/>
+<!-- /ko -->
+<hr/>
+<div>How is the inverse of a quaternion defined?</div>
+<!-- ko if: solved -->
+Quaternion $a = (q_0, q)$<br/>
+Inverse $a^{-1} = \frac{1}{|a|^2}(q_0, -q)$<br/>
+<!-- /ko -->
+<hr/>
+<div>How can quaternions be used for rotations?</div>
+<!-- ko if: solved -->
+A point $p = (x,y,z)$ can be rotated around an axis A, with $|A| = 1$ by angle $\alpha$ through the origin:<br/>
+<ol>
+<li>Interpret the point as a quaternion with 0 scalar part: a = (0, p)</li>
+<li>The rotation is represented as $ r=(\frac{cos(\alpha)}{2}, \frac{sin(\alpha)}{2}A) $ </li>
+<li>The rotation can be done by $a' = r a r^{-1}$</li>
+<li>The vector part of the new quaternion a' is the result</li>
+<li>To rotate around an axis that is located somewhere in space first translate the point to the origin, rotate it there and then translate it back</li>
+</ol>
+<!-- /ko -->
+<hr/>
+<div>How can rotations be appended to each other using quaternions?</div>
+<!-- ko if: solved -->
+By multiplying them together.
+<!-- /ko -->
+<hr/>
+
+<div>What are the advantages of using quaternions for rotations?</div>
+<!-- ko if: solved -->
+<ul>
+<li>Considerably less multiplications, thus faster computation</li>
+<li>Easy interpolation between rotations, i.e. SLERP with quaternions.</li>
+<li>No gimbal lock</li>
+</ul>
+<!-- /ko -->
+
+
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">OK</button>
+	<button class="btn btn-default" data-bind="click: failed">I got it wrong</button>
+<!-- /ko -->
+
+
