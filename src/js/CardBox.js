@@ -29,6 +29,7 @@ var areamoments = require("./cards/areamoments.js");
 var affinespaces = require("./cards/affine.js");
 var barycenter = require("./cards/barycentric.js");
 var quaternion = require("./cards/quaternion.js");
+var bezier = require("./cards/bezier.js");
 
 function CardBox() {
 	
@@ -51,6 +52,8 @@ function CardBox() {
 	registerCardType(affinespaces);
 	registerCardType(barycenter);
 	registerCardType(quaternion);
+	
+	registerCardType(bezier);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);

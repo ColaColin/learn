@@ -1,0 +1,84 @@
+<div>What is the base function of bezier curves? How is it called?</div>
+<!-- ko if: showingHints() || solved() -->
+<div class="bg-info">
+$B_i^n(t) = {{n}\choose{i}} t^i (1-t)^{n-i} $. Reminder: ${{n}\choose{i}} = \frac{n!}{i!(n-i)!} $<br/>
+They are called Bernstein-Polynoms<br/>
+</div>
+<!-- /ko -->
+
+<br/>
+<div>What are four basic properties of this base function?</div>
+<!-- ko if: showingHints() || solved() -->
+<div class="bg-info">
+Partition of $1$: $\sum_{i = 0}^{n} B_i^n(t) = 1$<br/>
+Positivity: $B_i^n(t) >= 0$ <br/>
+Symmetrie: $B_i^n(t) = B_{n-i}^n (1- t)$ <br/>
+Rekursion: $B_i^n(t) = t B_{i-1}^{n-1}(t) + (1-t) B_i^{n-1} (t) $ <br/>
+</div>
+<!-- /ko -->
+
+<br/>
+<div>How is the bezier curvce defined?</div>
+<!-- ko if: showingHints() || solved() -->
+<div class="bg-info">
+A bezier curve of degree $n$ has $(n+1)$ bezier points $b_i$: <br/>
+$X(t) = \sum_{i=0}^n b_i B_i^n(t)$ <br/>
+</div>
+<!-- /ko -->
+
+<br/>
+<div>What is the name of the line through the points of a bezier curve?</div>
+<!-- ko if: showingHints() || solved() -->
+<div class="bg-info">
+Bezierpolygon
+</div>
+<!-- /ko -->
+
+<br/>
+<div>What are the tangents on $X(0)$ and $X(1)$?</div>
+<!-- ko if: showingHints() || solved() -->
+<div class="bg-info">
+$X'(0) = n (b_1 - b_0)$ <br/>
+$X'(1) = n (b_n - b_{n-1})$ <br/>
+</div>
+<!-- /ko -->
+
+<br/>
+Given a cubic bezier curve with the following first three control points:<br/>
+$b_0$: <span data-bind="text: b0Display"></span>
+$b_1$: <span data-bind="text: b1Display"></span>
+$b_2$: <span data-bind="text: b2Display"></span><br/>
+
+Find the $b_3$ such that $X'(1)$ is equal to <span data-bind="text: tangent1Display"></span><br/>
+
+$b_3$:  <input data-bind="textInput: b3Input" /> <br/>
+
+<!-- ko if: solved -->
+$b_3$ is <span data-bind="text: b3Display"></span><br/>
+<!-- /ko -->
+
+<div>
+	<canvas id='canv' data-bind='visible: solved, attr: {width: drawing.width()+"px", height: drawing.height()+"px"}'></canvas>
+</div>
+
+<!-- ko if: !solved() && !showingHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
+

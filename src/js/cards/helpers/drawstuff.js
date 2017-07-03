@@ -25,6 +25,9 @@ function DrawStuff() {
 	// array of elements: {vecs: [[x,y],...], clr: stroke-string}
 	self.polygons = ko.observable([] /*[{vecs: [[1,1], [3,6], [3,0], [-2, -2]], clr: "rgb(255,0,0)"}]*/);
 	
+	// array of elements: {a: [x,y], b: [x,y], c: [x,y], d: [x,y], clr: "rgb(255,0,0), width: 3"}
+	self.beziers = ko.observable([]);
+	
 	self.minX = ko.observable(-7);
 	self.maxX = ko.observable(7);
 	self.minY = ko.observable(-7);
@@ -43,6 +46,33 @@ function DrawStuff() {
 	};
 	
 	window.worldToPixel = worldToPixel;
+	
+	var drawBezier = function(bezier) {
+		var b0 = worldToPixel(bezier.a);
+		var b1 = worldToPixel(bezier.b);
+		var b2 = worldToPixel(bezier.c);
+		var b3 = worldToPixel(bezier.d);
+		
+		var bs = [b0,b1,b2,b3];
+
+		var ctx = self.context();
+		ctx.strokeStyle = bezier.clr || "rgb(0,0,0)";
+		ctx.lineWidth = bezier.width || 1;
+		
+		ctx.beginPath();
+		ctx.moveTo(b0[0], b0[1]);
+		ctx.bezierCurveTo(b1[0], b1[1], b2[0], b2[1], b3[0], b3[1]);
+		ctx.stroke();
+		
+		for (var i = 0; i < bs.length; i++) {
+			var b = bs[i];
+			ctx.beginPath();
+			ctx.arc(b[0], b[1], 3, 2 * Math.PI, false);
+			ctx.fillStyle="black";
+			ctx.fill();
+			ctx.fillText('b'+i, b[0]+5, b[1]+5);
+		}
+	};
 	
 	var drawLine = function(a, b, strCfg, lw) {
 		if (!strCfg) {
@@ -138,6 +168,15 @@ function DrawStuff() {
 		}
 	};
 	
+	var drawBeziers = function() {
+		var beziers = self.beziers();
+		
+		for (var i = 0; i < beziers.length; i++) {
+			var bezier = beziers[i];
+			drawBezier(bezier);
+		}
+	};
+	
 	ko.computed(function() {
 		if (!self.context()) {
 			return;
@@ -146,6 +185,7 @@ function DrawStuff() {
 		drawCoordinateSystem();
 		drawLines();
 		drawPolygons();
+		drawBeziers();
 	});
 };
 
