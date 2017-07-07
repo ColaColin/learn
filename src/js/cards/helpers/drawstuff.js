@@ -28,6 +28,9 @@ function DrawStuff() {
 	// array of elements: {a: [x,y], b: [x,y], c: [x,y], d: [x,y], clr: "rgb(255,0,0), width: 3"}
 	self.beziers = ko.observable([]);
 	
+	// array of elements: {clr: "", width: 3, func: function(x) -> y}
+	self.functions = ko.observable([]);
+	
 	self.minX = ko.observable(-7);
 	self.maxX = ko.observable(7);
 	self.minY = ko.observable(-7);
@@ -46,6 +49,30 @@ function DrawStuff() {
 	};
 	
 	window.worldToPixel = worldToPixel;
+	
+	var drawFunction = function(func) {
+		var ctx = self.context();
+		ctx.strokeStyle = func.clr || "rgb(0,0,0)";
+		ctx.lineWidth = func.width || 1;
+		
+		var steps = 500;
+		var xDelta = (self.maxX() - self.minX()) / steps;
+		var curX = self.minX();
+		var startY = func.func(self.minX());
+		
+		ctx.beginPath();
+		var point =  worldToPixel([self.minX(), startY]);
+		ctx.moveTo(point[0], point[1]);
+		
+		for (var i = 0; i < 500; i++) {
+			curX += xDelta;
+			curY = func.func(curX);
+			point = worldToPixel([curX, curY]);
+			ctx.lineTo(point[0], point[1]);
+		}
+		
+		ctx.stroke();
+	};
 	
 	var drawBezier = function(bezier) {
 		var b0 = worldToPixel(bezier.a);
@@ -177,6 +204,15 @@ function DrawStuff() {
 		}
 	};
 	
+	var drawFunctions = function() {
+		var funcs = self.functions();
+		
+		for (var i = 0; i < funcs.length; i++) {
+			var func = funcs[i];
+			drawFunction(func);
+		}
+	};
+	
 	ko.computed(function() {
 		if (!self.context()) {
 			return;
@@ -186,6 +222,7 @@ function DrawStuff() {
 		drawLines();
 		drawPolygons();
 		drawBeziers();
+		drawFunctions();
 	});
 };
 

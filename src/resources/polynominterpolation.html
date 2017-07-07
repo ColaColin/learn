@@ -1,0 +1,132 @@
+<div>Polynom Interpolation</div>
+
+<br/>
+<div>Describe the basic idea of polynom interpolation</div>
+
+<!-- ko if: solved -->
+<div class="bg-info">
+For a polynom of degree $n$ there are $n+1$ given points $P_k$ with parameters $t_k$.<br/>
+Search for a function of the form $P(t) = \sum_{i = 0}^{n} A_i \cdot b_i(t)$ such that $P(t_k) = P_k$.<br/>
+<ul>
+<li>$A_i$ are the coefficients of the function</li>
+<li>The functions $b_i(t)$ are called base functions.</li>
+<li>When doing a polynom interpolation the base functions are polynoms</li>
+</ul>
+</div>
+<!-- /ko -->
+
+<div>The most simple base function for polynom interpolation is the monom. What exactly is that?
+How does the equation system look like that is solved for the coefficients?</div>
+
+<!-- ko if: solved -->
+<div class="bg-info">
+Monoms are simple functions: $m_i(t) = t^i$<br/>
+Using a monom as a basis the interpolation function looks like this: <br/>
+$P(t) = \sum_{i = 0}^n A_i \cdot t^i$.<br/>
+As by the definition of the polynom interpolation $P(t_k) = P_k$ needs to hold.<br/>
+This can be written as an equation system as matrix multiplications:<br/>
+$\begin{pmatrix} 1 & t_0 & t_0^2 & \dots & t_0^n \\
+				 1 & t_1 & t_1^2 & \dots & t_1^n \\
+				 \dots & \dots & \dots & \dots & \dots \\
+				 1 & t_n & t_n^2 & \dots & t_n^n \end{pmatrix} \cdot \begin{pmatrix} A_0 \\ A_1 \\ \dots \\ A_n \end{pmatrix} = \begin{pmatrix} P_0 \\ P_1 \\ \dots \\ P_n \end{pmatrix} $ <br/>
+This forms the $n+1$ equations that need to hold for the correct coefficients.<br/>
+This is solvable for pairwise unique $t_i$ but requires to solve a very big matrix every time any points change, which is $O(n^3)$.<br/>
+</div>
+<!-- /ko -->
+
+<div>How does the Lagrange Base improve this?</div>
+<!-- ko if: solved -->
+<div class="bg-info">
+Construct a new base function $L_i$. Desirable properties are:
+<ul>
+<li>be of degree n</li>
+<li>should depend on parameters $t_k$</li>
+<li>$L_i(t_i) = 1$</li>
+<li>$L_i(t_k) = 0$ for $i \neq k$</li>
+</ul>
+This yields the Lagrange Polynoms:<br/>
+$L_k(t) = \prod_{i = 0, i \neq k}^n \frac{t-t_i}{t_k - t_i}$<br/>
+
+Then the target points can be used directly as coefficients:<br/>
+$P(x) = \sum_{k=0}^n L_k(x) P_k$<br/>
+
+Disadvantage: Adding new controlpoints requires recalculation of new base functions, changing everything. <br/>
+</div>
+<!-- /ko -->
+
+<div>How do further the Newton polynoms improve the issues of the Lagrange polynoms?</div>
+<!-- ko if: solved -->
+<div class="bg-info">
+Base function: Newton Polynoms $n_0(t) = 1$ and $n_i(t) = \prod_{z = 0}^{i-1} (t-t_z)$<br/>
+$P(t) = \sum_{i=0}^{n} A_i \cdot n_i(t) $<br/>
+The resulting equation system is a lower triangular matrix and thus can be solved very fast.<br/>
+The first three coefficients are defined as:<br/>
+<ul>
+<li>$A_0 = P_0$</li>
+<li>$A_1 = \frac{P_1 - P_0}{t_1 - t_0}$</li>
+<li>$A_2 = \frac{\frac{P_2 - P_1}{t_2 - t_1} - \frac{P_1 - P_0}{t_1 - t_0}}{t_2 - t_0}$</li>
+</ul>
+
+These coefficients can be found using a recursive definition:<br/>
+$A_i = [0, \dots, x_i]f $<br/>
+$[t_i]f = f_i = P_i$<br/>
+$[t_i, \dots, t_j]f = \frac{[t_{i+1}, \dots, t_j]f - [t_i, \dots, t_{j-1}]f}{t_j - t_i}$<br/>
+
+All this ends up having the advantage that adding new points only requires new coefficients for these points.<br/>
+</div>
+<!-- /ko -->
+
+<div>What are problems of polynom interpolations?</div>
+
+<!-- ko if: solved -->
+<div class="bg-info">
+<ul>
+<li>Oscillation between control points!!!</li>
+<li>General computation cost. Lots of trickery required to not have to solve giant matrices</li>
+</ul>
+</div>
+<!-- /ko -->
+
+<div>Use <span data-bind="text: methods[method()].name"></span> polynom interpolation to interpolate: <br/> 
+f(<span data-bind="text: t0"></span>) = <span data-bind="text: x0"></span><br/>
+f(<span data-bind="text: t1"></span>) = <span data-bind="text: x1"></span><br/>
+f(<span data-bind="text: t2"></span>) = <span data-bind="text: x2"></span><br/>
+Find the polynom coefficients and enter them:
+</div>
+
+<div>
+c2 <input data-bind="textInput: c2Input" /><br/>
+c1 <input data-bind="textInput: c1Input" /><br/>
+c0 <input data-bind="textInput: c0Input" /><br/>
+</div>
+
+<!-- ko if: solved -->
+<div class="bg-info">
+c2 <span data-bind="text: c2"></span>
+c1 <span data-bind="text: c1"></span><br/>
+c0 <span data-bind="text: c0"></span><br/>
+
+</div>
+<!-- /ko -->
+
+<div>
+	<canvas id='canv' data-bind='visible: solved, attr: {width: drawing.width()+"px", height: drawing.height()+"px"}'></canvas>
+</div>
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
+
