@@ -1,0 +1,17 @@
+<div>Draw the interaction of light with a surface</div>
+
+
+<!-- ko if: solved -->
+
+<img src="/images/lightinteraction.png" />
+<br/>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Show solution</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">OK</button>
+	<button class="btn btn-default" data-bind="click: failed">I got it wrong</button>
+<!-- /ko -->

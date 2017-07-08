@@ -31,6 +31,7 @@ var barycenter = require("./cards/barycentric.js");
 var quaternion = require("./cards/quaternion.js");
 var bezier = require("./cards/bezier.js");
 var polynomsip = require("./cards/polynominterpolation.js")
+var lighti = require("./cards/lightinteraction.js");
 
 function CardBox() {
 	
@@ -55,6 +56,7 @@ function CardBox() {
 	registerCardType(quaternion);
 	registerCardType(bezier);
 	registerCardType(polynomsip);
+	registerCardType(lighti);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);
