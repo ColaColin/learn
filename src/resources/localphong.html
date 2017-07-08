@@ -1,0 +1,40 @@
+<div>Draw the local phong model that determines the color of a point of a surface. Define all variables.</div>
+
+
+<!-- ko if: solved -->
+
+<img src="/images/phong.png" />
+<br/>
+<br/>
+
+$L_a$ ambient light density <br/>
+$L_p$ light density of incident light <br/>
+$k_a, k_d, k_s$ Constants controlling surface color for ambient, diffuse and specular light <br/>
+
+Light is build from three components:<br/>
+Ambient light: $I_a = k_a \cdot L_a$ is independent of the situation. It is globally constant.<br/>
+Diffuse light: $I_d = k_d \cdot L_p \cdot cos(\theta) = k_d \cdot L_p \cdot (L \cdot N)$<br/>
+Specular light: $I_s = k_s \cdot L_p \cdot cos(\alpha)^m = k_s \cdot L_p \cdot (R \cdot V)$<br/>
+<br/>
+Overall light: $I = I_a + I_d + I_s$.<br/>
+
+$R$ can be calculated like this: <br/>
+$I := -L$ <br/>
+$R = I - 2(N \cdot I) N$<br/>
+<br/>
+An alternative to calculating $R$ is the blinn phong model. Here use the vector H, which is located in the middle between $L$ and $V$:
+$H := \frac{L + V}{||L + V||}$<br/>
+Specular light: $I_s = k_s \cdot L_p \cdot cos(\frac{\alpha}{2})^{bm} = k_s \cdot L_p \cdot (H \cdot N)$<br/>
+$bm$ should be higher, typically four times, than $m$ in the phong model for a similar look.<br/>
+<br/>
+
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Show solution</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">OK</button>
+	<button class="btn btn-default" data-bind="click: failed">I got it wrong</button>
+<!-- /ko -->
