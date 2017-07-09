@@ -1,0 +1,49 @@
+<div>Calculate a 1d linear regression</div>
+
+Points are (x/y):<br/>
+<span data-bind="text: x0"></span>/<span data-bind="text: y0"></span><br/>
+<span data-bind="text: x1"></span>/<span data-bind="text: y1"></span><br/>
+<span data-bind="text: x2"></span>/<span data-bind="text: y2"></span><br/>
+
+bias/w0: <input data-bind="textInput: w0Input" /><br/>
+w1: <input data-bind="textInput: w1Input" /><br/>
+
+<!-- ko if: solved -->
+
+Bias (w0): <span data-bind="text: w0"></span><br/>
+Weight (w1): <span data-bind="text: w1"></span><br/>
+
+<!-- /ko -->
+
+<!-- ko if: showingHints() || solved() -->
+
+$w = (X^TX)^{-1}X^TY$<br/>
+
+X is the matrix of the examples extended by a 1 in the first location to handle the bias.<br/>
+Y is the vector of target values.<br/>
+
+<br/>
+
+<!-- /ko -->
+
+<!-- ko if: !solved() && !showingHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
+

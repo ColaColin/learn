@@ -33,6 +33,7 @@ var bezier = require("./cards/bezier.js");
 var polynomsip = require("./cards/polynominterpolation.js")
 var lighti = require("./cards/lightinteraction.js");
 var lphong = require("./cards/localphong.js");
+var linreg = require("./cards/linreg.js");
 
 function CardBox() {
 	
@@ -59,6 +60,7 @@ function CardBox() {
 	registerCardType(polynomsip);
 	registerCardType(lighti);
 	registerCardType(lphong);
+	registerCardType(linreg);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);
