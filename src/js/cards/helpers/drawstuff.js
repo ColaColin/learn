@@ -31,6 +31,9 @@ function DrawStuff() {
 	// array of elements: {clr: "", width: 3, func: function(x) -> y}
 	self.functions = ko.observable([]);
 	
+	// array of elements: {clr: "", radius: 3, position: [x,y]}
+	self.points = ko.observable([]);
+	
 	self.minX = ko.observable(-7);
 	self.maxX = ko.observable(7);
 	self.minY = ko.observable(-7);
@@ -72,6 +75,20 @@ function DrawStuff() {
 		}
 		
 		ctx.stroke();
+	};
+	
+	var drawPoint = function(pt) {
+		var xy = worldToPixel([pt.position[0], pt.position[1]]);
+		
+		var ctx = self.context();
+		var pfs = ctx.fillStyle;
+		ctx.fillStyle = pt.clr || "rgb(0,0,0)";
+
+		ctx.beginPath();
+		ctx.arc(xy[0], xy[1], pt.radius, 2 * Math.PI, false);
+		ctx.fill();
+		
+		ctx.fillStyle = pfs;
 	};
 	
 	var drawBezier = function(bezier) {
@@ -213,6 +230,15 @@ function DrawStuff() {
 		}
 	};
 	
+	var drawPoints = function() {
+		var points = self.points();
+		
+		for (var i = 0; i < points.length; i++) {
+			var pt = points[i];
+			drawPoint(pt);
+		}
+	};
+	
 	ko.computed(function() {
 		if (!self.context()) {
 			return;
@@ -223,6 +249,7 @@ function DrawStuff() {
 		drawPolygons();
 		drawBeziers();
 		drawFunctions();
+		drawPoints();
 	});
 };
 

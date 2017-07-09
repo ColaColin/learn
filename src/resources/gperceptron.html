@@ -1,0 +1,65 @@
+<div>Remember the perceptron definitions and learning rule.</div>
+<hr/>
+<!-- ko if: showingHints() || solved() -->
+The formula for the perceptron is y = $\Theta[\sum_{i=1}^n x_i \cdot w_i - \theta]$. y is the class for the example x that has the components $x_1$ to $x_n$.<br/>
+$\Theta$ is the heaviside function. It's the derivative of the relu activation function: 1 for positive values, else 0.<br/>
+Instead of explicitly adding $- \theta$ one can instead add $x_0 = 1$. Then $w_0 = -\theta$ and the formula simplifies:<br/>
+y = $\Theta[x \cdot w]$. For example x and weight vector w.<br/>
+$w_0$ is here called the bias<br/>
+
+<br/>
+Learning can be done using this simplified handling of the bias by iterating over examples and for each example x:<br/>
+<ul>
+<li>e = y - y' for y is the expected class and y' is the predicted class</li>
+<li>weights += lr * e * x for lr is a learning rate and x is the example as a vector</li>
+<li>Repeat until all points fit. This will happen at some point assuming a linear separable problem.</li>
+</ul>
+<!-- /ko -->
+
+<hr/>
+<div>Find perceptron weights $w_0,w_1,w_2$ for the given separting hyperplane. Green points are positive, Red are negative.</div>
+
+<div>
+	<canvas id='canv' data-bind='attr: {width: drawing.width()+"px", height: drawing.height()+"px"}'></canvas>
+</div>
+
+Known points of the hyperplane are: <br/>
+(<span data-bind="text: xFor"></span>/<span data-bind="text: forX"></span>)<br/>
+(<span data-bind="text: forY"></span>/<span data-bind="text: yFor"></span>)<br/>
+
+w0: <input data-bind="textInput: w0Input" /> <br/>
+w1: <input data-bind="textInput: w1Input" /> <br/>
+w2: <input data-bind="textInput: w2Input" /> <br/>
+
+<!-- ko if: showingHints() || solved() -->
+In finding the correct weight values for the formula as described above it especially needs to be taken care to put the positive and negative examples 
+on the right side of the hyperplane. A recipie to do this is:<br/>
+<ul>
+<li>Determine the normal of the hyperplane.</li>
+<li>Make sure it points towards the positive points.</li>
+<li>Use the normal to project a point onto the hyperplane to determine $w_0$.
+</ul>
+Basically this is nothing more than the implicit form of a hyperplane representation.<br/>
+<!-- /ko -->
+
+<!-- ko if: !solved() && !showingHints() && !correct() -->
+<button class="btn btn-default" data-bind="click: giveHint">Help!</button>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">Next</button>
+	
+	<!-- ko if: correct -->
+	<div class="bg-success">Correct!</div>
+	<!-- /ko -->
+	
+	<!-- ko ifnot: correct -->
+	<div class="bg-danger">Wrong!</div>
+	<!-- /ko -->
+
+<!-- /ko -->
+
