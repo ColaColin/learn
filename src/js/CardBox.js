@@ -35,6 +35,7 @@ var lighti = require("./cards/lightinteraction.js");
 var lphong = require("./cards/localphong.js");
 var linreg = require("./cards/linreg.js");
 var gperc = require("./cards/gperceptron.js");
+var mrot = require("./cards/mrot.js");
 
 function CardBox() {
 	
@@ -63,6 +64,7 @@ function CardBox() {
 	registerCardType(lphong);
 	registerCardType(linreg);
 	registerCardType(gperc);
+	registerCardType(mrot);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);
