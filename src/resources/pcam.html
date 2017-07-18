@@ -1,0 +1,57 @@
+<div>Describe how a perspective transformation matrix for a camera can be build around a specific axis to transform the viewing frustrum into a cube.</div>
+<!-- ko if: solved -->
+For example for the standard OpenGL optical axis towards -z:<br/>
+<img src="/images/viewf.png" />
+<div class="bg-info">
+
+The transformation is build from four parts:<br/>
+<ol>
+<li>Center around the optical axis via shearing 
+<br/>
+$T_{sh} = \begin{pmatrix} 1 & 0 & \frac{x_{min} + x_{max}}{2 z_{max}} & 0 \\
+						0 & 1 & \frac{y_{min} + y_{max}}{2 z_{max}} & 0 \\
+						0 & 0 & 1 & 0 \\ 
+						0 & 0 & 0 & 1\end{pmatrix} $ </li>
+<li>Scale the viewing frustrum to have a slope of 1
+<br/>
+$ T_{scale} = \begin{pmatrix} \frac{2 z_{max}}{x_{max} - x_{min}} & 0 & 0 & 0 \\
+									0 & \frac{2 z_{max}}{y_{max} - y_{min}} & 0 & 0 \\
+									0 & 0 & 1 & 0 \\
+									0 & 0 & 0 & 1 \end{pmatrix} $
+</li>
+<li>Perspective transformation
+<br/>
+$ T_{p} = \begin{pmatrix} 1 & 0 & 0 & 0 \\
+						  0 & 1 & 0 & 0 \\
+						  0 & 0 & 1 & 0 \\
+						  0 & 0 & -1 & 0 \end{pmatrix} $ 
+</li>
+<li>Scale and translate to fit the clipping planes in place
+<br/>
+$ T_{N} = \begin{pmatrix} 1 & 0 & 0 & 0 \\
+						  0 & 1 & 0 & 0 \\
+						  0 & 0 & -\frac{z_{max} + z_{min}}{z_{max} - z_{min}} & 2\frac{z_{max} \cdot z_{min}}{z_{max} - z_{min}} \\
+						  0 & 0 & 0 & 1 \end{pmatrix} $
+</li>
+</ol>
+
+So overall: <br/>
+$T = T_N \cdot T_p \cdot T_{scale} \cdot T_{sh} = \begin{pmatrix} \frac{2 z_{max}}{x_{max} - x_{min}} & 0 & \frac{x_{max} + x_{min}}{x_{max} - x_{min}} & 0 \\
+																  0 & \frac{2 z_{max}}{y_{max} - y_{min}} & \frac{y_{max} + y_{min}}{y_{max} - y_{min}} & 0 \\
+																  0 & 0 & -\frac{z_{max} + z_{min}}{z_{max} - z_{min}} & \frac{2 z_{max} \cdot z_{min}}{z_{max} - z_{min}} \\
+																  0 & 0 & -1 & 0 \end{pmatrix}$
+<br/>
+
+</div>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">OK</button>
+	<button class="btn btn-default" data-bind="click: failed">I got it wrong</button>
+<!-- /ko -->
+
+
