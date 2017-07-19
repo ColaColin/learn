@@ -38,6 +38,7 @@ var gperc = require("./cards/gperceptron.js");
 var mrot = require("./cards/mrot.js");
 var pcam = require("./cards/pcam.js");
 var proaff = require("./cards/proaff.js");
+var gco = require("./cards/gco.js");
 
 function CardBox() {
 	
@@ -69,6 +70,7 @@ function CardBox() {
 	registerCardType(mrot);
 	registerCardType(pcam);
 	registerCardType(proaff);
+	registerCardType(gco);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);

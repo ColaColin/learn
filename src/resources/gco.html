@@ -1,0 +1,31 @@
+<div>Describe how Gorden Coons Surfaces work</div>
+<!-- ko if: solved -->
+<div class="bg-info">
+
+Four curves define the border of the surface: F(x,0), F(x, 1), F(y, 0), F(y, 1)<br/>
+
+A ruled surface is a surface that can be swept out by moving a line in space. This is done via a simple linear interpolation like this:<br/>
+
+$P_1F(x,y) = \begin{pmatrix} 1-y & y \end{pmatrix} \begin{pmatrix} F(x,0) \\ F(x,1) \end{pmatrix}$<br/>
+$P_2F(x,y) = \begin{pmatrix} 1-x & x \end{pmatrix} \begin{pmatrix} F(0,y) \\ F(1,y) \end{pmatrix}$<br/>
+
+A bilinear surface interpolates first on one and then on the other direction:<br/>
+$Q(x,y) = \begin{pmatrix} 1-x & x \end{pmatrix} \begin{pmatrix} F(0,0) & F(0,1) \\ F(1,0) & F(1,1) \end{pmatrix} \begin{pmatrix} 1-y \\ y \end{pmatrix}$
+
+The surface can then be interpolated over by adding the ruled surfaces along both axis and subtracting the bilinear surface:<br/>
+$F(x,y) = P_1F(x,y) + P_2F(x,y) - Q(x,y)$
+<br/>
+
+</div>
+<!-- /ko -->
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">OK</button>
+	<button class="btn btn-default" data-bind="click: failed">I got it wrong</button>
+<!-- /ko -->
+
+
