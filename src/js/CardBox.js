@@ -39,6 +39,7 @@ var mrot = require("./cards/mrot.js");
 var pcam = require("./cards/pcam.js");
 var proaff = require("./cards/proaff.js");
 var gco = require("./cards/gco.js");
+var eulerpoincare = require("./cards/eulerpoincare.js");
 
 function CardBox() {
 	
@@ -71,6 +72,7 @@ function CardBox() {
 	registerCardType(pcam);
 	registerCardType(proaff);
 	registerCardType(gco);
+	registerCardType(eulerpoincare);
 	
 	var cardRankings = Object.create(null);
 	self.sessionNumber = ko.observable(0);
