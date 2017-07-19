@@ -1,0 +1,38 @@
+<div>State some properties of projective transformations</div>
+<!-- ko if: solved -->
+<div class="bg-info">
+<ul>
+<li>straight lines stay straight lines</li>
+<li>intersections of lines are unchanged</li>
+<li>the order of points on lines is unchanged</li>
+<li>angles are changed</li>
+<li>parallels do not stay parallel</li>
+</ul>
+</div>
+<!-- /ko -->
+
+<hr/>
+
+<div>State some properties of affine transformations</div>
+<!-- ko if: solved -->
+<div class="bg-info">
+<ul>
+<li>parallels stay parallel</li>
+<li>straight lines stay straight lines</li>
+<li>barycentric coordinates are invariant</li>
+</ul>
+</div>
+<!-- /ko -->
+
+<hr/>
+
+<!-- ko ifnot: solved -->
+<button class="btn btn-default" data-bind="click: solve">Solve</button>
+<!-- /ko -->
+
+<!-- ko if: solved -->
+	<button class="btn btn-default" data-bind="click: next">OK</button>
+	<button class="btn btn-default" data-bind="click: failed">I got it wrong</button>
+<!-- /ko -->
+
+
